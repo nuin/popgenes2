@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PopGene.S2.AboutBox1" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAgAAASAAAAAAAACEAABCgAAAAAIAAAAACAAQAAA=</HashCode>
+      <FileName>AboutBox1.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.AssortD" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABkABAiAEGCgAAAACkCktAwCABISIAQQABACQBAAgCA=</HashCode>
+      <FileName>AssortD.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Autosomal" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAoAECCgAAAAEEDssA9GAADxIAQQAAAAAACAgAA=</HashCode>
+      <FileName>Autosomal.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.ChiSquare" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBABAIgAECAgACQADACgAYASAADzNEAAAAAVAgIAAgA=</HashCode>
+      <FileName>ChiSquare.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.ContIsland" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBACREoEUiikAACAGEDEgAACAAEQIAARAAAAAAEQQEA=</HashCode>
+      <FileName>ContIsland.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Drift" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EHggBC5QECAkhgCAmECkAAECIEgxIBAYEAAAAGAEIE4=</HashCode>
+      <FileName>Drift.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.FreqDep" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQAAkCoAECAwAAAAEECFAAACiAgAYAQQQFQAAEAAAAA=</HashCode>
+      <FileName>FreqDep.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.FStats" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SARABQogFCAkAaWAMEDEBAACAAcAsBAQEgCABFEwBEA=</HashCode>
+      <FileName>FStats.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Htime" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBABAoQECBkBACA2EGkQCACAAAAIAAYQMAAAAAIAAA=</HashCode>
+      <FileName>Htime.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.IrMut" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABAoAUCCkABAAGGCEYgACABAiIgAQAIAAEAAAAEA=</HashCode>
+      <FileName>IrMut.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.IsleIsland" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABEABEoA3CCkQAAAGECERAACAAMwIBAQkAEQAAAAgEA=</HashCode>
+      <FileName>IsleIsland.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Linkage" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAIAAAhJECAhPAgACACEQAACAAH3KBIUgEAABAAEQQA=</HashCode>
+      <FileName>Linkage.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.LinkHisto" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAACAAAAAAAACAAAACIAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>LinkHisto.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.MagD" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABgoAECAgAAAAGECsACACAAIAIAQQAAAAAQAAAAA=</HashCode>
+      <FileName>MagD.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.mainF" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgCBQSAQBTwCARBJHACBogqzgAJQCLR0JwygSCAoJRY=</HashCode>
+      <FileName>main.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Markov" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAgIBIljECkkEAAAAgDMQCACAABEQAAQgAAAgAAgAAA=</HashCode>
+      <FileName>Markov.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.MolPopGen" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CZ4CgCEikD4KKJYBgf6rBAACEDD/gAhepWRJoB2oKIE=</HashCode>
+      <FileName>MolPopGen.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Muller" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAgCECgAQgCBAACkQBgCCgAAKAAQBBAAACAAAEI=</HashCode>
+      <FileName>Muller.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.MySettings" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAABAAIAAABAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Neutral" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAABAogUCBEAIAAMECkIBACAAAAICAQAAAABAABAAA=</HashCode>
+      <FileName>Neutral.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.QTL" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgIEghMSAEACAAADCEgCBKDDj5IGgSAMCwAxIAFEg=</HashCode>
+      <FileName>QTL.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Quanti" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAABAAAECAQAAAAAACuAAECSAIAIAAQAIAAAAAEgAA=</HashCode>
+      <FileName>Quanti.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Selection" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AVAABAoQEjAwASQBHES0gAJCADo5ICUSaEQAABAM8AA=</HashCode>
+      <FileName>Selection.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.SplashScreen2" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAACAAAAAAAECAAAACAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>SplashScreen2.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.TwoMut" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABAoAUCCkABAAGGCEYgACAFAiIgAQAIAAEAAAAAA=</HashCode>
+      <FileName>TwoMut.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Wahlund" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DACAgAAQECAhACAEAICEAAACAHP/IAAwgIVCAgAA4AA=</HashCode>
+      <FileName>Wahlund.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.Xlinked" Collapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAJAogEDDgABAAGECEsA8KQAAwIAQQAIAAQEAAAAA=</HashCode>
+      <FileName>Xlinked.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopGene.S2.My.MyApplication" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Module Name="PopGene.S2.Module1" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgEAAAEAAAAIAAAAAAAADIBAAAAAJAAAACAAEg=</HashCode>
+      <FileName>MainModule.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="PopGene.S2.My.MySettingsProperty" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="PopGene.S2.My.Resources.Resources" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

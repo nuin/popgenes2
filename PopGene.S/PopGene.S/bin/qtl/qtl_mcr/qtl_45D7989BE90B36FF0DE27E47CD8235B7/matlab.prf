@@ -1,0 +1,25 @@
+#MATLAB Preferences
+#Tue Jan 12 16:53:32 AST 2010
+FileBrowserFiveColumnWidths=S[150 100 75 150 400]
+ReplaceMatchCase=Bfalse
+ReplaceWordWrap=Bfalse
+EditorNamedBufferOption=I2
+RLOrderB2_Wb_B2=S0:1:2:
+RLWidthB2_Wb_B2_2=I125
+ReplaceWholeWord=Bfalse
+RLWidthB2_Wb_B2_1=I125
+RLWidthB2_Wb_B2_0=I125
+RLPrevInitB2_Wb_B2=Btrue
+EditorMRU9=S
+EditorMRU8=S
+EditorMRU7=S
+EditorMRU6=S
+EditorMRU5=S
+ArrayEditor_CS_Format=I0
+EditorMRU4=SC:\\Program Files\\MATLAB71\\work\\figure2_P.txt
+EditorMRU3=SC:\\Program Files\\MATLAB71\\toolbox\\matlab\\scribe\\legend.m
+EditorMRU2=SC:\\Program Files\\MATLAB71\\toolbox\\matlab\\graphics\\hold.m
+EditorMRU1=SC:\\Documents and Settings\\nuin\\Desktop\\quantitative_trait.m
+RLHiddenB2_Wb_B2=I24
+FileBrowserFiveColumnOrder=S[0 1 2 3 4]
+FileBrowserViewMode=I0

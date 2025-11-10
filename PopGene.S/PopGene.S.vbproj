@@ -1,0 +1,442 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{03824378-5679-4ACF-B447-FAFBCADA6AA7}</ProjectGuid>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>popgenes3.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>PopGene.S2</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>VBScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>PopGene.S2</RootNamespace>
+    <StartupObject>PopGene.S2.My.MyApplication</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>WindowsForms</MyType>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SccAuxPath>
+    </SccAuxPath>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>PopGene.S.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032</NoWarn>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>PopGene.S.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032</NoWarn>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic">
+      <Name>Microsoft.VisualBasic</Name>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="ZedGraph, Version=4.5.8.22068, Culture=neutral, PublicKeyToken=02a83cbd123fcd60">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <Compile Include="AboutBox1.Designer.vb">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AboutBox1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="assort.vb" />
+    <Compile Include="AssortD.Designer.vb">
+      <DependentUpon>AssortD.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AssortD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssortM.Designer.vb">
+      <DependentUpon>AssortM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AssortM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Autosomal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChiSquare.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContIsland.Designer.vb">
+      <DependentUpon>ContIsland.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ContIsland.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Drift.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FreqDep.Designer.vb">
+      <DependentUpon>FreqDep.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FreqDep.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FStats.Designer.vb">
+      <DependentUpon>FStats.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FStats.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Htime.Designer.vb">
+      <DependentUpon>Htime.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Htime.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IrMut.Designer.vb">
+      <DependentUpon>IrMut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IrMut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IsleIsland.Designer.vb">
+      <DependentUpon>IsleIsland.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IsleIsland.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Linkage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LinkHisto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MagD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Markov.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MolPopGen.Designer.vb">
+      <DependentUpon>MolPopGen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MolPopGen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Muller.Designer.vb">
+      <DependentUpon>Muller.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Muller.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Neutral.Designer.vb">
+      <DependentUpon>Neutral.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Neutral.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QTL.Designer.vb">
+      <DependentUpon>QTL.vb</DependentUpon>
+    </Compile>
+    <Compile Include="QTL.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Quanti.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Selection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen2.Designer.vb">
+      <DependentUpon>SplashScreen2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TwoMut.Designer.vb">
+      <DependentUpon>TwoMut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TwoMut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Wahlund.Designer.vb">
+      <DependentUpon>Wahlund.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Wahlund.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Xlinked.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="AboutBox1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AssortD.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AssortD.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AssortM.resx">
+      <DependentUpon>AssortM.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Autosomal.resx">
+      <DependentUpon>Autosomal.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChiSquare.resx">
+      <DependentUpon>ChiSquare.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContIsland.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ContIsland.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Drift.resx">
+      <DependentUpon>Drift.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FreqDep.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FreqDep.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FStats.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FStats.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Htime.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Htime.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IrMut.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>IrMut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IsleIsland.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>IsleIsland.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Linkage.resx">
+      <DependentUpon>Linkage.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LinkHisto.resx">
+      <DependentUpon>LinkHisto.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MagD.resx">
+      <DependentUpon>MagD.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="main.resx">
+      <DependentUpon>main.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Markov.resx">
+      <DependentUpon>Markov.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MolPopGen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MolPopGen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Muller.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Muller.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Neutral.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Neutral.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QTL.resx">
+      <DependentUpon>QTL.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Quanti.resx">
+      <DependentUpon>Quanti.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Selection.resx">
+      <DependentUpon>Selection.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen2.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SplashScreen2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TwoMut.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TwoMut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wahlund.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Wahlund.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xlinked.resx">
+      <DependentUpon>Xlinked.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="popgenes3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.2.0">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

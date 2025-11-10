@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="PopGene.S">
+</Property><Property Name="Solution File" Value="C:\wxWidgets\PopGene.S\PopGene.S\PopGene.S.sln">
+</Property><Property Name="Date" Value="Monday, May 28, 2007">
+</Property><Property Name="Time" Value="20:43 PM">
+</Property><Property Name="Log Number" Value="2">
+</Property></Properties><Event ErrorLevel="0" Project="PopGene.S" Source="PopGene.S\PopGene.S.vbproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="PopGene.S" Source="PopGene.S\PopGene.S.vbproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="" Source="PopGene.S.sln" Description="The solution file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="" Source="PopGene.S.sln" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="PopGene.S.Setup.vdproj" Source="PopGene.S.Setup\PopGene.S.Setup.vdproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="PopGene.S.Setup.vdproj" Source="PopGene.S.Setup\PopGene.S.Setup.vdproj" Description="Converted">
+</Event></UpgradeLog>

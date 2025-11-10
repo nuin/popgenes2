@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PopGene.S", "PopGene.S\PopGene.S.vbproj", "{03824378-5679-4ACF-B447-FAFBCADA6AA7}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PopGene.S.Setup", "PopGene.S.Setup\PopGene.S.Setup.vdproj", "{C1C6B50E-CDA8-4C18-809F-B5A6C3494CB2}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 3
+		SccProjectName0 = \u0022$/popgenes/PopGene.S\u0022,\u0020ODAAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SccProjectUniqueName1 = PopGene.S\\PopGene.S.vbproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection1 = PopGene.S\\
+		SccProjectUniqueName2 = PopGene.S.Setup\\PopGene.S.Setup.vdproj
+		SccLocalPath2 = .
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection2 = PopGene.S.Setup\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03824378-5679-4ACF-B447-FAFBCADA6AA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03824378-5679-4ACF-B447-FAFBCADA6AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03824378-5679-4ACF-B447-FAFBCADA6AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03824378-5679-4ACF-B447-FAFBCADA6AA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C6B50E-CDA8-4C18-809F-B5A6C3494CB2}.Debug|Any CPU.ActiveCfg = Debug
+		{C1C6B50E-CDA8-4C18-809F-B5A6C3494CB2}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

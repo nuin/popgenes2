@@ -1,0 +1,195 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{03824378-5679-4ACF-B447-FAFBCADA6AA7}</ProjectGuid>
+    <SccProjectName>"$/popgenes/PopGene.S", ODAAAAAA</SccProjectName>
+    <SccLocalPath>..</SccLocalPath>
+    <SccProvider>MSSCCI:Microsoft Visual SourceSafe</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>PopGene.S</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>VBScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>PopGene.S</RootNamespace>
+    <StartupObject>PopGene.S.mainF</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>PopGene.S.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032</NoWarn>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>PopGene.S.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032</NoWarn>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic">
+      <Name>Microsoft.VisualBasic</Name>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="ZedGraph">
+      <Name>zedgraph</Name>
+      <HintPath>..\..\..\..\documents and settings\paulo\desktop\zedgraph_dll_v508_458\zedgraph_dll_v508_458\zedgraph_dll_v4.5.8\zedgraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Autosomal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChiSquare.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Drift.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Linkage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LinkHisto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MagD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Markov.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Quanti.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Selection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Xlinked.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Autosomal.resx">
+      <DependentUpon>Autosomal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChiSquare.resx">
+      <DependentUpon>ChiSquare.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Drift.resx">
+      <DependentUpon>Drift.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Linkage.resx">
+      <DependentUpon>Linkage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LinkHisto.resx">
+      <DependentUpon>LinkHisto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MagD.resx">
+      <DependentUpon>MagD.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="main.resx">
+      <DependentUpon>main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Markov.resx">
+      <DependentUpon>Markov.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Quanti.resx">
+      <DependentUpon>Quanti.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Selection.resx">
+      <DependentUpon>Selection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xlinked.resx">
+      <DependentUpon>Xlinked.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
