@@ -1,6 +1,6 @@
-import * as d3 from 'd3';
+<script>
+  import * as d3 from 'd3';
 
-component DriftSimulation() {
   let numPopulations = 10;
   let populationSize = 20;
   let initialFrequency = 0.5;
@@ -102,31 +102,29 @@ component DriftSimulation() {
     const simulationResults = runDriftSimulation(numPopulations, populationSize, initialFrequency, numGenerations);
     drawChart(simulationResults, numGenerations);
   };
+</script>
 
-  return `
-    <div class="container">
-      <a href="/">Back to Modules</a>
-      <h1>Drift Simulation</h1>
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="num-populations">Number of populations</label>
-          <input type="number" id="num-populations" value="${numPopulations}" onchange="${(e) => numPopulations = parseInt(e.target.value)}">
-        </div>
-        <div class="form-group">
-          <label for="population-size">Effective population size (Ne)</label>
-          <input type="number" id="population-size" value="${populationSize}" onchange="${(e) => populationSize = parseInt(e.target.value)}">
-        </div>
-        <div class="form-group">
-          <label for="initial-frequency">Initial frequency [P(A)]</label>
-          <input type="number" id="initial-frequency" value="${initialFrequency}" step="0.01" min="0" max="1" onchange="${(e) => initialFrequency = parseFloat(e.target.value)}">
-        </div>
-        <div class="form-group">
-          <label for="num-generations">Number of generations</label>
-          <input type="number" id="num-generations" value="${numGenerations}" onchange="${(e) => numGenerations = parseInt(e.target.value)}">
-        </div>
-      </div>
-      <button onclick="${runAndDraw}">Run Simulation</button>
-      <div id="chart-container"></div>
+<div class="container">
+  <a href="/">Back to Modules</a>
+  <h1>Drift Simulation</h1>
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="num-populations">Number of populations</label>
+      <input type="number" id="num-populations" value="{numPopulations}" onchange="{ (e) => numPopulations = parseInt(e.target.value) }">
     </div>
-  `;
-}
+    <div class="form-group">
+      <label for="population-size">Effective population size (Ne)</label>
+      <input type="number" id="population-size" value="{populationSize}" onchange="{ (e) => populationSize = parseInt(e.target.value) }">
+    </div>
+    <div class="form-group">
+      <label for="initial-frequency">Initial frequency [P(A)]</label>
+      <input type="number" id="initial-frequency" value="{initialFrequency}" step="0.01" min="0" max="1" onchange="{ (e) => initialFrequency = parseFloat(e.target.value) }">
+    </div>
+    <div class="form-group">
+      <label for="num-generations">Number of generations</label>
+      <input type="number" id="num-generations" value="{numGenerations}" onchange="{ (e) => numGenerations = parseInt(e.target.value) }">
+    </div>
+  </div>
+  <button onclick="{runAndDraw}">Run Simulation</button>
+  <div id="chart-container"></div>
+</div>
