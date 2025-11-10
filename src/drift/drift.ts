@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-function runDriftSimulation(
+export function runDriftSimulation(
   numPopulations: number,
   populationSize: number,
   initialFrequency: number,
@@ -26,7 +26,7 @@ function runDriftSimulation(
   return results;
 }
 
-function drawChart(data: any[], numGenerations: number) {
+export function drawChart(data: any[], numGenerations: number) {
   const container = d3.select("#chart-container");
   container.selectAll("*").remove();
 
@@ -91,18 +91,3 @@ function drawChart(data: any[], numGenerations: number) {
     .attr("x", -height / 2)
     .text("Allele Frequency");
 }
-
-function runAndDraw() {
-  const numPopulations = parseInt((document.getElementById("num-populations") as HTMLInputElement).value);
-  const populationSize = parseInt((document.getElementById("population-size") as HTMLInputElement).value);
-  const initialFrequency = parseFloat((document.getElementById("initial-frequency") as HTMLInputElement).value);
-  const numGenerations = parseInt((document.getElementById("num-generations") as HTMLInputElement).value);
-
-  const simulationResults = runDriftSimulation(numPopulations, populationSize, initialFrequency, numGenerations);
-  drawChart(simulationResults, numGenerations);
-}
-
-document.getElementById("run-simulation")?.addEventListener("click", runAndDraw);
-
-// Initial run
-runAndDraw();

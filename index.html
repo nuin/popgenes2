@@ -8,11 +8,17 @@
     <link rel="stylesheet" href="/src/styles/main.css">
   </head>
   <body>
-    <div class="container">
-      <h1>PopGeneS.js Modules</h1>
-      <ul>
-        <li><a href="/src/drift/">Drift</a></li>
-      </ul>
-    </div>
+    <script type="module">
+      export default () => {
+        return `
+          <div class="container">
+            <h1>PopGeneS.js Modules</h1>
+            <ul>
+              <li><a href="/src/drift/">Drift</a></li>
+            </ul>
+          </div>
+        `;
+      };
+    </script>
   </body>
 </html>
