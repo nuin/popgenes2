@@ -1,8 +1,0 @@
-export component App() {
-  <div class="container">
-    <h1>PopGeneS.js Modules</h1>
-    <ul>
-      <li><a href="/src/drift/index.html">Drift</a></li>
-    </ul>
-  </div>
-}

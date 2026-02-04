@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PopGeneS.js — Data-Forward</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── DARK THEME ── */
+    [data-theme="dark"] {
+      --bg: #111;
+      --bg-surface: #0d0d0d;
+      --bg-control: #1a1a1a;
+      --border: #222;
+      --border-focus: #4dabf7;
+      --text: #ccc;
+      --text-muted: #555;
+      --text-dim: #444;
+      --accent: #4dabf7;
+      --accent-hover: #74c0fc;
+      --accent-text: #111;
+      --input-bg: #1a1a1a;
+      --input-border: #333;
+      --input-text: #ddd;
+      --axis: #444;
+      --grid: #1e1e1e;
+      --label: #666;
+      --chart-bg: #0d0d0d;
+      --link-hover-bg: #1a1a1a;
+      --viz-1: #4dabf7;
+      --viz-2: #ff6b6b;
+      --viz-3: #51cf66;
+      --viz-4: #ffd43b;
+      --viz-5: #cc5de8;
+      --viz-6: #ff922b;
+      --viz-7: #22b8cf;
+      --viz-8: #e599f7;
+      --line-opacity: 0.8;
+      --toggle-bg: #222;
+      --toggle-knob: #666;
+    }
+
+    /* ── LIGHT THEME ── */
+    [data-theme="light"] {
+      --bg: #fff;
+      --bg-surface: #fff;
+      --bg-control: #f6f6f6;
+      --border: #e5e5e5;
+      --border-focus: #0066CC;
+      --text: #222;
+      --text-muted: #999;
+      --text-dim: #bbb;
+      --accent: #0066CC;
+      --accent-hover: #0052A3;
+      --accent-text: #fff;
+      --input-bg: #fff;
+      --input-border: #ddd;
+      --input-text: #222;
+      --axis: #bbb;
+      --grid: #f0f0f0;
+      --label: #999;
+      --chart-bg: #fff;
+      --link-hover-bg: #f5f5f5;
+      --viz-1: #0066CC;
+      --viz-2: #E63946;
+      --viz-3: #06A77D;
+      --viz-4: #D4920B;
+      --viz-5: #7B68EE;
+      --viz-6: #E07020;
+      --viz-7: #0E8A8A;
+      --viz-8: #B05CE6;
+      --line-opacity: 0.6;
+      --toggle-bg: #e5e5e5;
+      --toggle-knob: #999;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    /* ── PICKER BAR ── */
+    .picker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.75rem 2rem;
+      background: #0a0a0a;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid #222;
+    }
+    .picker-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+      font-weight: 500;
+    }
+    .page-btn {
+      padding: 0.35rem 0.9rem;
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #666;
+      background: transparent;
+      border: 1px solid #222;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .page-btn:hover { color: #aaa; border-color: #444; }
+    .page-btn.active { color: #ccc; border-color: #444; background: #1a1a1a; }
+
+    /* Theme toggle */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .theme-toggle-label {
+      font-size: 0.65rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+    .toggle-track {
+      width: 36px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      position: relative;
+      transition: background 0.25s;
+    }
+    .toggle-track.light { background: #ccc; }
+    .toggle-knob {
+      width: 16px;
+      height: 16px;
+      background: #888;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.25s, background 0.25s;
+    }
+    .toggle-track.light .toggle-knob {
+      transform: translateX(16px);
+      background: #fff;
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ════════════════════════════════════════════ */
+    /*  LANDING PAGE                              */
+    /* ════════════════════════════════════════════ */
+    .landing {
+      min-height: calc(100vh - 50px);
+      display: flex;
+      justify-content: center;
+      padding: 5rem 2rem 4rem;
+      background: var(--bg);
+      transition: background 0.25s;
+    }
+    .landing-inner { max-width: 520px; width: 100%; }
+    .landing h1 {
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+      transition: color 0.25s;
+    }
+    .landing .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 3.5rem;
+      transition: color 0.25s;
+    }
+    .cat { margin-bottom: 2rem; }
+    .cat-title {
+      font-size: 0.6rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      transition: color 0.25s;
+    }
+    .cat a {
+      display: block;
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.2rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .cat a:hover {
+      background: var(--link-hover-bg);
+      color: var(--accent);
+    }
+
+    /* ════════════════════════════════════════════ */
+    /*  SIMULATION PAGE                           */
+    /* ════════════════════════════════════════════ */
+    .sim {
+      height: calc(100vh - 50px);
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      transition: background 0.25s;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .back {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .back:hover { color: var(--text); }
+    .sim-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      transition: color 0.25s;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .control-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      transition: color 0.25s;
+    }
+    .control-input {
+      width: 60px;
+      padding: 0.3rem 0.4rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--input-text);
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 4px;
+      outline: none;
+      text-align: center;
+      transition: border-color 0.15s, background 0.25s, color 0.25s;
+    }
+    .control-input:focus {
+      border-color: var(--border-focus);
+    }
+    .btn-run {
+      padding: 0.35rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      background: var(--accent);
+      color: var(--accent-text);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-run:hover { background: var(--accent-hover); }
+    .btn-reset {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-reset:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+    }
+    .chart-full {
+      flex: 1;
+      padding: 0.75rem;
+      display: flex;
+    }
+    .chart-wrap {
+      flex: 1;
+      background: var(--chart-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .chart { width: 100%; height: 100%; }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <div class="picker">
+    <span class="picker-label">View</span>
+    <button class="page-btn active" data-page="landing">Landing</button>
+    <button class="page-btn" data-page="sim">Simulation</button>
+    <div class="theme-toggle" id="theme-toggle">
+      <span class="theme-toggle-label">Dark</span>
+      <div class="toggle-track" id="toggle-track">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="theme-toggle-label">Light</span>
+    </div>
+  </div>
+
+  <!-- ── LANDING ── -->
+  <div class="view active" data-page="landing">
+    <div class="landing">
+      <div class="landing-inner">
+        <h1>PopGeneS.js</h1>
+        <p class="subtitle">Population genetics simulations</p>
+        <div class="cat">
+          <div class="cat-title">Drift</div>
+          <a href="#">Genetic Drift (Wright-Fisher)</a>
+        </div>
+        <div class="cat">
+          <div class="cat-title">Selection</div>
+          <a href="#">Natural Selection</a>
+        </div>
+        <div class="cat">
+          <div class="cat-title">Mutation</div>
+          <a href="#">Two-Way Mutation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SIMULATION ── -->
+  <div class="view" data-page="sim">
+    <div class="sim">
+      <div class="topbar">
+        <div class="topbar-left">
+          <a href="#" class="back">&larr; Modules</a>
+          <span class="sim-title">Genetic Drift</span>
+        </div>
+        <div class="controls">
+          <div class="control-item">
+            <span class="control-label">Pop</span>
+            <input type="number" class="control-input" value="10">
+          </div>
+          <div class="control-item">
+            <span class="control-label">Ne</span>
+            <input type="number" class="control-input" value="20">
+          </div>
+          <div class="control-item">
+            <span class="control-label">P(A)</span>
+            <input type="number" class="control-input" value="0.50" step="0.01">
+          </div>
+          <div class="control-item">
+            <span class="control-label">Gen</span>
+            <input type="number" class="control-input" value="100">
+          </div>
+          <button class="btn-run">Run</button>
+          <button class="btn-reset">Reset</button>
+        </div>
+      </div>
+      <main class="chart-full">
+        <div class="chart-wrap">
+          <div class="chart" id="chart"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ── Theme toggle ──
+    var isDark = true;
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      isDark = !isDark;
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      document.getElementById('toggle-track').classList.toggle('light', !isDark);
+      // Redraw chart for new theme
+      if (document.querySelector('.view[data-page="sim"]').classList.contains('active')) {
+        redrawChart();
+      }
+    });
+
+    // ── Page toggle ──
+    document.querySelectorAll('.page-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.page-btn').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var page = this.dataset.page;
+        document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+        document.querySelector('.view[data-page="' + page + '"]').classList.add('active');
+        if (page === 'sim') {
+          setTimeout(function() { redrawChart(); }, 80);
+        }
+      });
+    });
+
+    // ── Chart ──
+    var chartData = generateDriftData(8);
+
+    function generateDriftData(n) {
+      var lines = [];
+      for (var p = 0; p < n; p++) {
+        var pts = [];
+        var freq = 0.5;
+        for (var g = 0; g <= 100; g++) {
+          pts.push({generation: g, frequency: freq});
+          freq += (Math.random() - 0.5) * 0.055;
+          freq = Math.max(0, Math.min(1, freq));
+        }
+        lines.push(pts);
+      }
+      return lines;
+    }
+
+    function redrawChart() {
+      var container = document.getElementById('chart');
+      d3.select('#chart').selectAll('*').remove();
+
+      var rect = container.getBoundingClientRect();
+      var w = rect.width;
+      var h = rect.height;
+      if (w < 10 || h < 10) return;
+
+      var style = getComputedStyle(document.body);
+      var axisColor = style.getPropertyValue('--axis').trim();
+      var gridColor = style.getPropertyValue('--grid').trim();
+      var labelColor = style.getPropertyValue('--label').trim();
+      var lineOpacity = parseFloat(style.getPropertyValue('--line-opacity').trim());
+
+      var colors = [
+        style.getPropertyValue('--viz-1').trim(),
+        style.getPropertyValue('--viz-2').trim(),
+        style.getPropertyValue('--viz-3').trim(),
+        style.getPropertyValue('--viz-4').trim(),
+        style.getPropertyValue('--viz-5').trim(),
+        style.getPropertyValue('--viz-6').trim(),
+        style.getPropertyValue('--viz-7').trim(),
+        style.getPropertyValue('--viz-8').trim()
+      ];
+
+      var margin = { top: 24, right: 32, bottom: 52, left: 60 };
+      var iw = w - margin.left - margin.right;
+      var ih = h - margin.top - margin.bottom;
+
+      var svg = d3.select('#chart')
+        .append('svg')
+        .attr('width', w)
+        .attr('height', h);
+
+      var g = svg.append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+      var x = d3.scaleLinear().domain([0, 100]).range([0, iw]);
+      var y = d3.scaleLinear().domain([0, 1]).range([ih, 0]);
+
+      // Grid
+      g.selectAll('.gridY')
+        .data([0, 0.25, 0.5, 0.75, 1.0])
+        .enter().append('line')
+        .attr('x1', 0).attr('x2', iw)
+        .attr('y1', function(d) { return y(d); })
+        .attr('y2', function(d) { return y(d); })
+        .attr('stroke', gridColor)
+        .attr('stroke-dasharray', '2,4');
+
+      g.selectAll('.gridX')
+        .data([0, 25, 50, 75, 100])
+        .enter().append('line')
+        .attr('x1', function(d) { return x(d); })
+        .attr('x2', function(d) { return x(d); })
+        .attr('y1', 0).attr('y2', ih)
+        .attr('stroke', gridColor)
+        .attr('stroke-dasharray', '2,4');
+
+      // Axes
+      g.append('g')
+        .attr('transform', 'translate(0,' + ih + ')')
+        .call(d3.axisBottom(x).ticks(5));
+
+      g.append('g')
+        .call(d3.axisLeft(y).ticks(5).tickFormat(d3.format('.2f')));
+
+      svg.selectAll('.domain').attr('stroke', axisColor);
+      svg.selectAll('.tick line').attr('stroke', axisColor);
+      svg.selectAll('.tick text')
+        .attr('fill', labelColor)
+        .attr('font-family', 'Inter, sans-serif')
+        .attr('font-size', '10px');
+
+      // Lines
+      var line = d3.line()
+        .x(function(d) { return x(d.generation); })
+        .y(function(d) { return y(d.frequency); })
+        .curve(d3.curveCatmullRom.alpha(0.5));
+
+      chartData.forEach(function(data, i) {
+        var path = g.append('path')
+          .datum(data)
+          .attr('fill', 'none')
+          .attr('stroke', colors[i % colors.length])
+          .attr('stroke-width', 1.8)
+          .attr('opacity', lineOpacity)
+          .attr('d', line);
+
+        var totalLength = path.node().getTotalLength();
+        path
+          .attr('stroke-dasharray', totalLength + ' ' + totalLength)
+          .attr('stroke-dashoffset', totalLength)
+          .transition()
+          .duration(1200)
+          .delay(i * 60)
+          .ease(d3.easeQuadOut)
+          .attr('stroke-dashoffset', 0);
+      });
+
+      // Axis labels
+      svg.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('x', margin.left + iw / 2)
+        .attr('y', h - 10)
+        .attr('font-family', 'Inter, sans-serif')
+        .attr('font-size', '11px')
+        .attr('font-weight', '500')
+        .attr('fill', labelColor)
+        .text('Generations');
+
+      svg.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 16)
+        .attr('x', -(margin.top + ih / 2))
+        .attr('font-family', 'Inter, sans-serif')
+        .attr('font-size', '11px')
+        .attr('font-weight', '500')
+        .attr('fill', labelColor)
+        .text('Allele Frequency');
+    }
+  </script>
+</body>
+</html>

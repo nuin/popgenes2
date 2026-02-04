@@ -4,164 +4,92 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-PopGene.S2 is a Windows Forms desktop application written in Visual Basic .NET for population genetics simulations and educational purposes. The application provides interactive visualizations and calculations for various population genetics models including drift, selection, mutation, gene flow, and linkage.
+PopGeneS.js is a web-based population genetics simulation suite for educational and research purposes. Rewritten from the original VB.NET desktop app (preserved in `PopGene.S/` for reference).
 
 ## Technology Stack
 
-- **Language**: Visual Basic .NET (VB.NET)
-- **Framework**: .NET Framework 2.0/3.5
-- **UI Framework**: Windows Forms (MDI container)
-- **Visualization**: ZedGraph library for scientific graphing
-- **Build System**: MSBuild (Visual Studio project format)
+- **Framework**: SvelteKit (Svelte 5 with runes)
+- **Language**: TypeScript (strict mode)
+- **Visualization**: D3.js v7
+- **Build Tool**: Vite
+- **Styling**: CSS custom properties (dark/light theme via `[data-theme]`)
 
-## Project Structure
-
-```
-PopGene.S/
-├── main.vb                    # Main MDI form with menu system
-├── MainModule.vb              # Global variables (driftType, selType, etc.)
-├── *.vb files                 # Individual module forms for each simulation type
-├── *.Designer.vb              # Auto-generated UI code (do not edit manually)
-├── *.resx                     # Resource files for forms
-├── PopGene.S.vbproj          # Visual Studio project file
-├── bin/                       # Build output directory
-│   ├── PopGene.S2.exe        # Compiled executable
-│   └── ZedGraph.dll          # Third-party charting library
-├── obj/                       # Build intermediate files
-└── My Project/               # Assembly info and project settings
-```
-
-## Build Commands
-
-The project uses MSBuild. Key commands:
+## Commands
 
 ```bash
-# Build the project (Debug configuration)
-msbuild PopGene.S/PopGene.S.vbproj /p:Configuration=Debug
-
-# Build Release version
-msbuild PopGene.S/PopGene.S.vbproj /p:Configuration=Release
-
-# Clean build artifacts
-msbuild PopGene.S/PopGene.S.vbproj /t:Clean
+npm run dev       # Start dev server with HMR
+npm run build     # Production build
+npm run preview   # Preview production build
+npm run check     # Type-check with svelte-check
 ```
 
-Output location: `PopGene.S/bin/PopGene.S2.exe`
+No test framework is currently configured.
 
 ## Architecture
 
-### Application Entry Point
-- **Startup**: `PopGene.S2.My.MyApplication` (defined in project settings)
-- **Main Form**: `mainF` class in `main.vb` - MDI container with menu system
+### SvelteKit File-Based Routing
 
-### Global State Management
-`MainModule.vb` contains module-level shared variables:
-- `driftType` - Controls drift simulation mode (1-4)
-- `selType` - Selection model type
-- `freq_dep` - Frequency-dependent selection flag
-- `driftMut` - Mutation flag for drift simulations
-- `assortype` - Assortative mating type
-- `h1-h8` - Hardy-Weinberg calculation values
-
-### Module Pattern
-Each simulation is implemented as a separate Windows Form:
-
-**Basic Genetics:**
-- `ChiSquare.vb` - Chi-square test for allele frequencies
-- `Quanti.vb` - Genotype frequency calculations
-- `Autosomal.vb` - Autosomal locus mating simulations
-- `Xlinked.vb` - X-linked locus simulations
-
-**Selection Models:**
-- `Selection.vb` - General selection model (uses `selType` from MainModule)
-- `FreqDep.vb` - Frequency-dependent selection visualizations
-
-**Drift Simulations:**
-- `Drift.vb` - Genetic drift (mode controlled by `driftType` global variable)
-  - Type 1: Pure drift
-  - Type 2: Drift + Selection
-  - Type 3: Drift + Mutation
-  - Type 4: Drift + Selection + Mutation
-- `Markov.vb` - Markov process drift model
-- `Htime.vb` - Heterozygosity decline over time
-
-**Mutation Models:**
-- `IrMut.vb` - Irreversible mutation
-- `TwoMut.vb` - Two-way mutation
-- `Neutral.vb` - Neutral mutation model
-- `Muller.vb` - Muller's Ratchet simulation
-
-**Population Structure:**
-- `ContIsland.vb` - Continent-Island migration model
-- `IsleIsland.vb` - Island-Island model
-- `FStats.vb` - F-Statistics calculations
-- `Wahlund.vb` - Wahlund effect demonstration
-
-**Gametic Disequilibrium:**
-- `Linkage.vb` - Gamete frequency with linkage
-- `MagD.vb` - Magnitude of linkage disequilibrium D
-- `LinkHisto.vb` - Linkage histogram visualization
-
-**Assortative Mating:**
-- `AssortD.vb` - Assortative mating with dominance (uses `assortype` global)
-- `AssortM.vb` - Assortative mating matrix
-- `assort.vb` - Assortative mating calculations
-
-**Advanced Modules:**
-- `MolPopGen.vb` - Molecular population genetics
-- `QTL.vb` - Quantitative Trait Loci analysis
-
-**UI Components:**
-- `SplashScreen2.vb` - Application splash screen
-- `AboutBox1.vb` - About dialog
-
-### Form Creation Pattern
-All simulation forms follow this pattern:
-```vb
-Dim frm As New ModuleName
-frm.MdiParent = Me
-frm.Show()
+```
+src/
+  routes/
+    +page.svelte              # Landing page
+    +layout.svelte            # Root layout (imports app.css)
+    drift/+page.svelte        # Drift simulation
+    selection/+page.svelte    # Selection simulation
+    mutation/+page.svelte     # Mutation simulation
+  lib/
+    sim/                      # Pure simulation logic (no DOM, no Svelte)
+      types.ts                # SimPoint, SimResult types
+      drift.ts                # Wright-Fisher drift
+      selection.ts            # Natural selection (delta-p)
+      mutation.ts             # Two-way mutation
+    components/               # Shared Svelte components
+      Chart.svelte            # D3 chart mount (auto-redraws on data/theme/resize)
+      ParamInput.svelte       # Labeled numeric input
+      SimLayout.svelte        # Topbar + full-bleed chart layout
+    charts/
+      lineChart.ts            # D3 line chart renderer (reads CSS vars for theming)
+    theme.ts                  # Dark/light theme store
+  app.css                     # Design tokens (dark + light themes)
+  app.html                    # HTML shell with Google Fonts
 ```
 
-Configuration is often set via global variables before showing the form.
+### Separation of Concerns
 
-## Key Dependencies
+1. **Simulation logic** (`lib/sim/*.ts`) — Pure functions. No DOM, no Svelte. Accept params, return `SimResult` (array of `SimPoint[]` trajectories).
+2. **Chart rendering** (`lib/charts/lineChart.ts`) — D3 function taking a DOM element + data. Reads theme colors from CSS custom properties.
+3. **UI components** (`lib/components/*.svelte`) — Svelte 5 components using runes (`$state`, `$effect`, `$props`).
+4. **Route pages** (`routes/*/+page.svelte`) — Thin wrappers composing sim logic + components.
 
-- **ZedGraph.dll** - Located in parent directory, referenced for all graphing
-- **Microsoft.VisualBasic.PowerPacks** (v9.0) - For visual components
-- **System.Windows.Forms** - Windows Forms framework
-- **System.Drawing** - Graphics rendering
+### Simulation Data Contract
 
-## Important Notes
+```typescript
+interface SimPoint { generation: number; frequency: number; }
+type SimResult = SimPoint[][];
+```
 
-### Designer Files
-- `*.Designer.vb` files are auto-generated by the Windows Forms Designer
-- Do not manually edit Designer files - use the Visual Studio Designer instead
-- Changes to form UI should be made through the Designer to maintain consistency with `.resx` files
+### UI Pattern: Data-Forward
 
-### Global Variable Dependencies
-Many forms depend on global state in `MainModule.vb`. When creating new forms or modifying behavior:
-1. Check if global variables need to be set before form creation
-2. Look at menu click handlers in `main.vb` for initialization patterns
-3. Global variables are used for form configuration rather than constructor parameters
+- Controls compressed into a topbar (inline inputs + Run/Reset buttons)
+- Chart fills the entire remaining viewport
+- Dark theme default, light theme via toggle
+- Staggered line-draw animation via stroke-dashoffset
 
-### Resource Files
-`.resx` files contain embedded resources (images, icons, strings). The main icon is `popgenes3.ico`.
+### Svelte 5 Runes
 
-## Development Workflow
+This project uses Svelte 5 runes, not legacy reactive declarations:
+- `$state()` for reactive state
+- `$derived()` for computed values
+- `$effect()` for side effects
+- `$props()` for component props
+- `$bindable()` for two-way binding
 
-When modifying existing modules:
-1. Locate the corresponding `.vb` file for the form logic
-2. Check `main.vb` menu handlers for initialization code
-3. Be aware of global variable dependencies in `MainModule.vb`
-4. Designer changes require opening in Visual Studio with Windows Forms Designer
+## Reference: Original VB.NET Application
 
-When adding new simulations:
-1. Create new Form class inheriting from `System.Windows.Forms.Form`
-2. Add menu item in `main.vb` (both in InitializeComponent and click handler)
-3. Follow existing pattern: create form, set MDI parent, configure, show
-4. Add global variables to `MainModule.vb` if needed for cross-form state
+`PopGene.S/` contains the original desktop application. Key files for porting:
+- `Drift.vb`, `Selection.vb`, `TwoMut.vb` — simulation algorithms
+- `MainModule.vb` — parameter definitions
 
-## Version Control
+## Git
 
-The project previously used SVN (`.svn` directory present) but is not currently under Git version control.
+- Remove claude references from commit messages
