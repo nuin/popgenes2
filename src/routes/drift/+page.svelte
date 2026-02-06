@@ -1,7 +1,7 @@
 <script lang="ts">
 	import SimLayout from '$lib/components/SimLayout.svelte';
 	import ParamInput from '$lib/components/ParamInput.svelte';
-	import Chart from '$lib/components/Chart.svelte';
+	import DriftChart from '$lib/components/DriftChart.svelte';
 	import { simulateDrift, DRIFT_DEFAULTS } from '$lib/sim/drift';
 	import type { SimResult } from '$lib/sim/types';
 
@@ -33,6 +33,6 @@
 		<ParamInput label="Gen" bind:value={generations} min={1} />
 	{/snippet}
 	{#snippet chart()}
-		<Chart {data} />
+		<DriftChart {data} {initialFreq} {populationSize} />
 	{/snippet}
 </SimLayout>
