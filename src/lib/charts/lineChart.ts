@@ -5,6 +5,7 @@ export interface ChartOptions {
 	xLabel?: string;
 	yLabel?: string;
 	yDomain?: [number, number];
+	lineLabels?: string[];
 }
 
 const VIZ_VARS = [
@@ -17,7 +18,7 @@ export function renderLineChart(
 	data: SimResult,
 	options: ChartOptions = {}
 ) {
-	const { xLabel = 'Generations', yLabel = 'Allele Frequency', yDomain = [0, 1] } = options;
+	const { xLabel = 'Generations', yLabel = 'Allele Frequency', yDomain = [0, 1], lineLabels } = options;
 
 	d3.select(container).selectAll('*').remove();
 
@@ -30,6 +31,8 @@ export function renderLineChart(
 	const axisColor = style.getPropertyValue('--axis').trim();
 	const gridColor = style.getPropertyValue('--grid').trim();
 	const labelColor = style.getPropertyValue('--label').trim();
+	const textColor = style.getPropertyValue('--text').trim();
+	const bgColor = style.getPropertyValue('--bg').trim();
 	const lineOpacity = parseFloat(style.getPropertyValue('--line-opacity').trim()) || 0.8;
 
 	const colors = VIZ_VARS.map((v) => style.getPropertyValue(v).trim());
@@ -135,4 +138,144 @@ export function renderLineChart(
 		.attr('font-weight', '500')
 		.attr('fill', labelColor)
 		.text(yLabel);
+
+	// --- Crosshair interaction ---
+	if (data.length === 0) return;
+
+	// Create crosshair group
+	const crosshairGroup = g.append('g')
+		.attr('class', 'crosshair')
+		.style('opacity', 0);
+
+	// Vertical line
+	const crosshairLine = crosshairGroup.append('line')
+		.attr('y1', 0)
+		.attr('y2', ih)
+		.attr('stroke', gridColor)
+		.attr('stroke-width', 1)
+		.attr('stroke-dasharray', '4,4');
+
+	// Generation label at top
+	const genLabel = crosshairGroup.append('text')
+		.attr('y', -8)
+		.attr('text-anchor', 'middle')
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('font-size', '10px')
+		.attr('font-weight', '600')
+		.attr('fill', textColor);
+
+	// Create dots for each series
+	const crosshairDots = data.map((_, i) => {
+		return crosshairGroup.append('circle')
+			.attr('r', 4)
+			.attr('fill', colors[i % colors.length])
+			.attr('stroke', bgColor)
+			.attr('stroke-width', 1.5);
+	});
+
+	// Info panel
+	const panelWidth = 100;
+	const panelHeight = Math.min(20 + data.length * 16, 120);
+
+	const infoPanel = crosshairGroup.append('g')
+		.attr('class', 'info-panel');
+
+	infoPanel.append('rect')
+		.attr('width', panelWidth)
+		.attr('height', panelHeight)
+		.attr('rx', 3)
+		.attr('fill', bgColor)
+		.attr('stroke', gridColor)
+		.attr('stroke-width', 1)
+		.attr('opacity', 0.95);
+
+	// Text elements for each series
+	const infoTexts = data.map((_, i) => {
+		return infoPanel.append('text')
+			.attr('x', 8)
+			.attr('y', 14 + i * 16)
+			.attr('font-family', 'Inter, sans-serif')
+			.attr('font-size', '10px')
+			.attr('fill', colors[i % colors.length]);
+	});
+
+	// Binary search to find closest generation
+	function findClosestPoint(series: SimPoint[], targetGen: number): SimPoint | null {
+		if (series.length === 0) return null;
+
+		let left = 0;
+		let right = series.length - 1;
+
+		while (left < right) {
+			const mid = Math.floor((left + right) / 2);
+			if (series[mid].generation < targetGen) {
+				left = mid + 1;
+			} else {
+				right = mid;
+			}
+		}
+
+		// Check if left-1 is closer
+		if (left > 0) {
+			const diffLeft = Math.abs(series[left].generation - targetGen);
+			const diffLeftMinus = Math.abs(series[left - 1].generation - targetGen);
+			if (diffLeftMinus < diffLeft) {
+				left = left - 1;
+			}
+		}
+
+		return series[left];
+	}
+
+	// Create overlay rect for mouse events
+	g.append('rect')
+		.attr('class', 'overlay')
+		.attr('width', iw)
+		.attr('height', ih)
+		.attr('fill', 'transparent')
+		.style('cursor', 'crosshair')
+		.on('mouseenter', () => {
+			crosshairGroup.style('opacity', 1);
+		})
+		.on('mouseleave', () => {
+			crosshairGroup.style('opacity', 0);
+		})
+		.on('mousemove', function(event) {
+			const [mouseX] = d3.pointer(event, this);
+			const generation = x.invert(mouseX);
+			const clampedGen = Math.max(0, Math.min(maxGen, generation));
+			const roundedGen = Math.round(clampedGen);
+
+			// Update crosshair line position
+			crosshairLine.attr('x1', x(roundedGen)).attr('x2', x(roundedGen));
+
+			// Update generation label
+			genLabel
+				.attr('x', x(roundedGen))
+				.text(`Gen ${roundedGen}`);
+
+			// Update dots and info text for each series
+			data.forEach((series, i) => {
+				const point = findClosestPoint(series, roundedGen);
+				if (point) {
+					crosshairDots[i]
+						.attr('cx', x(point.generation))
+						.attr('cy', y(point.frequency));
+
+					const label = lineLabels && lineLabels[i] ? lineLabels[i] : `#${i + 1}`;
+					infoTexts[i].text(`${label}: ${point.frequency.toFixed(4)}`);
+				}
+			});
+
+			// Position info panel
+			let panelX = x(roundedGen) + 12;
+			let panelY = 10;
+
+			// Keep panel inside visible area
+			if (panelX + panelWidth > iw) {
+				panelX = x(roundedGen) - panelWidth - 12;
+			}
+
+			infoPanel.attr('transform', `translate(${panelX}, ${panelY})`);
+		});
 }

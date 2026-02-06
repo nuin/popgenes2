@@ -19,8 +19,11 @@ export function renderDeFinettiChart(
 	const gridColor = style.getPropertyValue('--grid').trim();
 	const labelColor = style.getPropertyValue('--label').trim();
 	const textColor = style.getPropertyValue('--text').trim();
+	const bgColor = style.getPropertyValue('--bg').trim();
 	const viz1 = style.getPropertyValue('--viz-1').trim();
 	const viz2 = style.getPropertyValue('--viz-2').trim();
+	const viz3 = style.getPropertyValue('--viz-3').trim();
+	const viz4 = style.getPropertyValue('--viz-4').trim();
 
 	const margin = { top: 24, right: 32, bottom: 52, left: 32 };
 	const iw = w - margin.left - margin.right;
@@ -155,6 +158,182 @@ export function renderDeFinettiChart(
 		.duration(400)
 		.attr('opacity', 0.9);
 
+	// --- Geometric guide group (will be shown on hover) ---
+	const guideGroup = g.append('g')
+		.attr('class', 'geometric-guides')
+		.style('opacity', 0);
+
+	// Vertical line from point to base (showing H)
+	const guideLine = guideGroup.append('line')
+		.attr('class', 'guide-vertical')
+		.attr('stroke', viz3)
+		.attr('stroke-width', 1.5)
+		.attr('stroke-dasharray', '4,3');
+
+	// Line from base point to left (showing R = aa frequency)
+	const guideLineR = guideGroup.append('line')
+		.attr('class', 'guide-r')
+		.attr('stroke', viz2)
+		.attr('stroke-width', 3);
+
+	// Line from base point to right (showing D = AA frequency)
+	const guideLineD = guideGroup.append('line')
+		.attr('class', 'guide-d')
+		.attr('stroke', viz4)
+		.attr('stroke-width', 3);
+
+	// Horizontal line from point to left edge (for reading)
+	const guideHorizLeft = guideGroup.append('line')
+		.attr('class', 'guide-horiz-left')
+		.attr('stroke', viz2)
+		.attr('stroke-width', 1)
+		.attr('stroke-dasharray', '3,3');
+
+	// Horizontal line from point to right edge
+	const guideHorizRight = guideGroup.append('line')
+		.attr('class', 'guide-horiz-right')
+		.attr('stroke', viz4)
+		.attr('stroke-width', 1)
+		.attr('stroke-dasharray', '3,3');
+
+	// Info panel background
+	const infoPanelWidth = 130;
+	const infoPanelHeight = 95;
+	const infoPanel = guideGroup.append('g')
+		.attr('class', 'info-panel');
+
+	infoPanel.append('rect')
+		.attr('width', infoPanelWidth)
+		.attr('height', infoPanelHeight)
+		.attr('rx', 4)
+		.attr('fill', bgColor)
+		.attr('stroke', gridColor)
+		.attr('stroke-width', 1)
+		.attr('opacity', 0.95);
+
+	// Info panel text elements
+	const infoTextP = infoPanel.append('text')
+		.attr('x', 8).attr('y', 16)
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('font-size', '10px')
+		.attr('fill', textColor);
+
+	const infoTextQ = infoPanel.append('text')
+		.attr('x', 70).attr('y', 16)
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('font-size', '10px')
+		.attr('fill', textColor);
+
+	// Divider
+	infoPanel.append('line')
+		.attr('x1', 8).attr('x2', infoPanelWidth - 8)
+		.attr('y1', 24).attr('y2', 24)
+		.attr('stroke', gridColor);
+
+	// Genotype labels
+	const infoTextD = infoPanel.append('text')
+		.attr('x', 8).attr('y', 40)
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('font-size', '10px');
+
+	const infoTextH = infoPanel.append('text')
+		.attr('x', 8).attr('y', 56)
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('font-size', '10px');
+
+	const infoTextR = infoPanel.append('text')
+		.attr('x', 8).attr('y', 72)
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('font-size', '10px');
+
+	// HWE deviation
+	const infoTextDev = infoPanel.append('text')
+		.attr('x', 8).attr('y', 88)
+		.attr('font-family', 'Inter, sans-serif')
+		.attr('font-size', '9px')
+		.attr('fill', labelColor);
+
+	// Function to show geometric guides for a point
+	function showGuides(px: number, py: number, hweHet: number) {
+		// Calculate genotype frequencies from coordinates
+		// In De Finetti: x = p, y = H
+		const p = px;
+		const q = 1 - p;
+		const H = py;
+		const D = p - H / 2;  // AA frequency
+		const R = q - H / 2;  // aa frequency
+
+		// Vertical line from point to base
+		guideLine
+			.attr('x1', x(px)).attr('y1', y(py))
+			.attr('x2', x(px)).attr('y2', y(0));
+
+		// Base segments: R (from 0 to p-H/2) shown as distance from aa vertex
+		// D shown as distance from AA vertex
+		const baseY = y(0);
+
+		// R segment: from aa (x=0) to point's projection showing R
+		guideLineR
+			.attr('x1', x(0)).attr('y1', baseY + 8)
+			.attr('x2', x(R)).attr('y2', baseY + 8);
+
+		// D segment: from AA (x=1) back to show D
+		guideLineD
+			.attr('x1', x(1)).attr('y1', baseY + 8)
+			.attr('x2', x(1 - D)).attr('y2', baseY + 8);
+
+		// Horizontal lines from point to triangle edges
+		// Left edge at height py: x = py/2
+		const leftEdgeX = py / 2;
+		guideHorizLeft
+			.attr('x1', x(px)).attr('y1', y(py))
+			.attr('x2', x(leftEdgeX)).attr('y2', y(py));
+
+		// Right edge at height py: x = 1 - py/2
+		const rightEdgeX = 1 - py / 2;
+		guideHorizRight
+			.attr('x1', x(px)).attr('y1', y(py))
+			.attr('x2', x(rightEdgeX)).attr('y2', y(py));
+
+		// Position info panel - adjust based on point position
+		let panelX = x(px) + 15;
+		let panelY = y(py) - infoPanelHeight - 10;
+
+		// Keep panel inside visible area
+		if (panelX + infoPanelWidth > side) {
+			panelX = x(px) - infoPanelWidth - 15;
+		}
+		if (panelY < 0) {
+			panelY = y(py) + 15;
+		}
+
+		infoPanel.attr('transform', `translate(${panelX}, ${panelY})`);
+
+		// Update text
+		infoTextP.html(`<tspan font-weight="600">p</tspan> = ${p.toFixed(4)}`);
+		infoTextQ.html(`<tspan font-weight="600">q</tspan> = ${q.toFixed(4)}`);
+
+		infoTextD
+			.attr('fill', viz4)
+			.html(`<tspan font-weight="600">D (AA)</tspan> = ${D.toFixed(4)}`);
+		infoTextH
+			.attr('fill', viz3)
+			.html(`<tspan font-weight="600">H (Aa)</tspan> = ${H.toFixed(4)}`);
+		infoTextR
+			.attr('fill', viz2)
+			.html(`<tspan font-weight="600">R (aa)</tspan> = ${R.toFixed(4)}`);
+
+		const deviation = H - hweHet;
+		const devSign = deviation >= 0 ? '+' : '';
+		infoTextDev.text(`ΔH from HWE: ${devSign}${deviation.toFixed(4)}`);
+
+		guideGroup.style('opacity', 1);
+	}
+
+	function hideGuides() {
+		guideGroup.style('opacity', 0);
+	}
+
 	// --- User points + connecting lines to HWE ---
 	points.forEach((pt) => {
 		// Connecting line from observed to HWE expected
@@ -184,8 +363,8 @@ export function renderDeFinettiChart(
 			.duration(300)
 			.attr('r', 4);
 
-		// Observed point
-		g.append('circle')
+		// Observed point with hover interaction
+		const pointCircle = g.append('circle')
 			.attr('cx', x(pt.p))
 			.attr('cy', y(pt.het))
 			.attr('r', 0)
@@ -193,8 +372,64 @@ export function renderDeFinettiChart(
 			.attr('fill-opacity', 0.4)
 			.attr('stroke', viz2)
 			.attr('stroke-width', 1.5)
+			.style('cursor', 'pointer')
 			.transition()
 			.duration(300)
 			.attr('r', 5);
+
+		// Add invisible larger hit area for easier hovering
+		g.append('circle')
+			.attr('cx', x(pt.p))
+			.attr('cy', y(pt.het))
+			.attr('r', 15)
+			.attr('fill', 'transparent')
+			.style('cursor', 'pointer')
+			.on('mouseenter', () => {
+				showGuides(pt.p, pt.het, pt.hweHet);
+				d3.select(pointCircle.node()).attr('r', 7);
+			})
+			.on('mouseleave', () => {
+				hideGuides();
+				d3.select(pointCircle.node()).attr('r', 5);
+			});
 	});
+
+	// --- Example point outside parabola (for demonstration) ---
+	// Add a static example showing how to read the triangle
+	if (points.length === 0) {
+		// Show example point when no user points
+		const exampleP = 0.7;
+		const exampleH = 0.3;
+		const exampleHWE = 2 * exampleP * (1 - exampleP);
+
+		const exampleGroup = g.append('g')
+			.attr('class', 'example-point')
+			.style('opacity', 0);
+
+		// Example point
+		exampleGroup.append('circle')
+			.attr('cx', x(exampleP))
+			.attr('cy', y(exampleH))
+			.attr('r', 5)
+			.attr('fill', viz2)
+			.attr('fill-opacity', 0.3)
+			.attr('stroke', viz2)
+			.attr('stroke-width', 1.5)
+			.attr('stroke-dasharray', '3,2');
+
+		// Label
+		exampleGroup.append('text')
+			.attr('x', x(exampleP) + 10)
+			.attr('y', y(exampleH) - 5)
+			.attr('font-family', 'Inter, sans-serif')
+			.attr('font-size', '9px')
+			.attr('fill', labelColor)
+			.text('Hover points for details');
+
+		exampleGroup
+			.transition()
+			.delay(1200)
+			.duration(500)
+			.style('opacity', 0.6);
+	}
 }
