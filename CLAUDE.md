@@ -16,6 +16,7 @@ npm run build        # Production build
 npm run preview      # Preview production build
 npm run check        # Type-check with svelte-check
 npm run check:watch  # Type-check in watch mode
+npm run deploy       # Build and deploy to Cloudflare Pages
 ```
 
 No test framework is currently configured.
@@ -87,6 +88,44 @@ CSS custom properties defined in `src/app.css` under `[data-theme="dark"]` and `
 - **Gene Flow**: Continent-Island, Island-Island, F-Statistics, Wahlund
 - **Linkage**: Disequilibrium, Magnitude, Histogram
 - **Advanced**: Molecular Pop Gen, QTL
+
+## Deployment
+
+**Domain**: popgenejs.bioinformat.org (Cloudflare Pages)
+
+**Hosting**: Cloudflare Pages (static site via `@sveltejs/adapter-static`)
+
+**Project name**: `popgenejs` (on Cloudflare account `bioinformat`)
+
+### How It Works
+
+The SvelteKit adapter-static prerenders all 28 routes into static HTML at build time. A `200.html` SPA fallback is generated for any routes that can't be prerendered. Cloudflare Pages serves the `build/` directory as static files.
+
+Configuration files:
+- `svelte.config.js` — adapter-static with `fallback: '200.html'`, output to `build/`
+- `wrangler.toml` — Cloudflare Pages project name and build output directory
+
+### Deploy
+
+```bash
+npm run deploy
+```
+
+This runs `npm run build` then `npx wrangler pages deploy build --project-name=popgenejs`.
+
+### First-Time Setup
+
+1. Authenticate wrangler: `npx wrangler login`
+2. Create the Pages project (already done): `npx wrangler pages project create popgenejs --production-branch=master`
+3. Deploy: `npm run deploy`
+4. Add custom domain in Cloudflare dashboard: **Workers & Pages > popgenejs > Custom domains > Add `popgenejs.bioinformat.org`**
+
+### Manual Deploy
+
+```bash
+npm run build
+npx wrangler pages deploy build --project-name=popgenejs
+```
 
 ## Reference: Original VB.NET Application
 
