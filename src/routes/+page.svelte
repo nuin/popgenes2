@@ -6,7 +6,7 @@
 	<div class="landing-inner">
 		<div class="header-row">
 			<div>
-				<h1>PopGene.S2</h1>
+				<h1>PopGeneJS</h1>
 				<p class="subtitle">Population Genetics Simulations</p>
 			</div>
 			<button class="theme-toggle" onclick={toggleTheme} aria-label="Toggle theme">

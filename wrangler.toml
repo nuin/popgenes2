@@ -1,0 +1,4 @@
+# Cloudflare Pages configuration
+# Custom domain: popgenejs.bioinformat.org
+name = "popgenejs"
+pages_build_output_dir = "build"
