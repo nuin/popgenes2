@@ -25,7 +25,7 @@
 	});
 </script>
 
-<SimLayout title="Genotype Frequencies" onrun={run} onreset={reset}>
+<SimLayout title="Genotype Frequencies" onrun={run} onreset={reset} helpKey="/frequencies/genotype">
 	{#snippet controls()}
 		<span style="font-size: 0.7rem; color: var(--text-muted);">
 			Click Run to plot HWE curves (p², 2pq, q²)

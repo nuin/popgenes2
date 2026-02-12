@@ -36,7 +36,7 @@
 	}
 </script>
 
-<SimLayout title="Linkage Histogram" onrun={run} onreset={reset}>
+<SimLayout title="Linkage Histogram" onrun={run} onreset={reset} helpKey="/linkage/histogram">
 	{#snippet controls()}
 		<ParamInput label="nAB" bind:value={nAB} min={0} />
 		<ParamInput label="nAb" bind:value={nAb} min={0} />

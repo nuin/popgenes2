@@ -28,7 +28,7 @@
 	}
 </script>
 
-<SimLayout title="Linkage Disequilibrium" onrun={run} onreset={reset}>
+<SimLayout title="Linkage Disequilibrium" onrun={run} onreset={reset} helpKey="/linkage/disequilibrium">
 	{#snippet controls()}
 		<ParamInput label="nAB" bind:value={nAB} min={0} />
 		<ParamInput label="nAb" bind:value={nAb} min={0} />

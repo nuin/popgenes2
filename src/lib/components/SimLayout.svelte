@@ -1,20 +1,28 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { theme, toggleTheme } from '$lib/theme';
+	import HelpPanel from './HelpPanel.svelte';
+	import { helpContent } from '$lib/help/content';
+	import type { HelpContent } from '$lib/help/types';
 
 	let {
 		title,
 		controls,
 		onrun,
 		onreset,
-		chart
+		chart,
+		helpKey
 	}: {
 		title: string;
 		controls: Snippet;
 		onrun: () => void;
 		onreset: () => void;
 		chart: Snippet;
+		helpKey?: string;
 	} = $props();
+
+	let helpOpen = $state(false);
+	let helpData: HelpContent | null = $derived(helpKey ? helpContent[helpKey] ?? null : null);
 </script>
 
 <div class="sim">
@@ -29,6 +37,14 @@
 			</div>
 			<button class="btn-run" onclick={onrun}>Run</button>
 			<button class="btn-reset" onclick={onreset}>Reset</button>
+			{#if helpData}
+				<button
+					class="btn-help"
+					onclick={() => (helpOpen = !helpOpen)}
+					aria-label="Show help"
+					aria-expanded={helpOpen}
+				>?</button>
+			{/if}
 			<button class="btn-theme" onclick={toggleTheme} aria-label="Toggle theme">
 				{$theme === 'dark' ? '&#9788;' : '&#9790;'}
 			</button>
@@ -39,6 +55,7 @@
 			{@render chart()}
 		</div>
 	</main>
+	<HelpPanel content={helpData} bind:open={helpOpen} />
 </div>
 
 <style>
@@ -48,6 +65,7 @@
 		flex-direction: column;
 		background: var(--bg);
 		transition: background 0.25s;
+		position: relative;
 	}
 
 	.topbar {
@@ -59,6 +77,8 @@
 		border-bottom: 1px solid var(--border);
 		flex-shrink: 0;
 		transition: background 0.25s, border-color 0.25s;
+		z-index: 200;
+		position: relative;
 	}
 
 	.topbar-left {
@@ -131,6 +151,25 @@
 	.btn-reset:hover {
 		color: var(--text);
 		border-color: var(--text-muted);
+	}
+
+	.btn-help {
+		padding: 0.35rem 0.55rem;
+		font-size: 0.8rem;
+		font-weight: 600;
+		font-family: var(--font-sans);
+		background: transparent;
+		color: var(--text-muted);
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		cursor: pointer;
+		transition: all 0.15s;
+		line-height: 1;
+	}
+
+	.btn-help:hover {
+		color: var(--accent);
+		border-color: var(--accent);
 	}
 
 	.btn-theme {

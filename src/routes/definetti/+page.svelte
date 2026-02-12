@@ -1,6 +1,8 @@
 <script lang="ts">
 	import DeFinettiChart from '$lib/components/DeFinettiChart.svelte';
 	import ParamInput from '$lib/components/ParamInput.svelte';
+	import HelpPanel from '$lib/components/HelpPanel.svelte';
+	import { helpContent } from '$lib/help/content';
 	import { theme, toggleTheme } from '$lib/theme';
 	import {
 		generateHWEParabola,
@@ -8,6 +10,9 @@
 		validateGenotypes,
 		type GenotypePoint
 	} from '$lib/sim/definetti';
+
+	let helpOpen = $state(false);
+	const helpData = helpContent['/definetti'] ?? null;
 
 	const parabola = generateHWEParabola();
 
@@ -64,6 +69,14 @@
 			</div>
 			<button class="btn-run" onclick={plot}>Plot</button>
 			<button class="btn-reset" onclick={clear}>Clear</button>
+			{#if helpData}
+				<button
+					class="btn-help"
+					onclick={() => (helpOpen = !helpOpen)}
+					aria-label="Show help"
+					aria-expanded={helpOpen}
+				>?</button>
+			{/if}
 			<button class="btn-theme" onclick={toggleTheme} aria-label="Toggle theme">
 				{$theme === 'dark' ? '&#9788;' : '&#9790;'}
 			</button>
@@ -77,6 +90,7 @@
 			<DeFinettiChart {parabola} {points} />
 		</div>
 	</main>
+	<HelpPanel content={helpData} bind:open={helpOpen} />
 </div>
 
 <style>
@@ -86,6 +100,7 @@
 		flex-direction: column;
 		background: var(--bg);
 		transition: background 0.25s;
+		position: relative;
 	}
 
 	.topbar {
@@ -97,6 +112,8 @@
 		border-bottom: 1px solid var(--border);
 		flex-shrink: 0;
 		transition: background 0.25s, border-color 0.25s;
+		z-index: 200;
+		position: relative;
 	}
 
 	.topbar-left {
@@ -193,6 +210,25 @@
 	.btn-reset:hover {
 		color: var(--text);
 		border-color: var(--text-muted);
+	}
+
+	.btn-help {
+		padding: 0.35rem 0.55rem;
+		font-size: 0.8rem;
+		font-weight: 600;
+		font-family: var(--font-sans);
+		background: transparent;
+		color: var(--text-muted);
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		cursor: pointer;
+		transition: all 0.15s;
+		line-height: 1;
+	}
+
+	.btn-help:hover {
+		color: var(--accent);
+		border-color: var(--accent);
 	}
 
 	.btn-theme {

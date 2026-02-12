@@ -42,7 +42,7 @@
 	}
 </script>
 
-<SimLayout title="F-Statistics" onrun={run} onreset={reset}>
+<SimLayout title="F-Statistics" onrun={run} onreset={reset} helpKey="/gene-flow/f-statistics">
 	{#snippet controls()}
 		<ParamInput label="Pops" bind:value={populations} min={2} />
 		<ParamInput label="Ne" bind:value={populationSize} min={2} />

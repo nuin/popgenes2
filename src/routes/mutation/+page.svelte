@@ -25,7 +25,7 @@
 	}
 </script>
 
-<SimLayout title="Two-Way Mutation" onrun={run} onreset={reset}>
+<SimLayout title="Two-Way Mutation" onrun={run} onreset={reset} helpKey="/mutation">
 	{#snippet controls()}
 		<ParamInput label="μ" bind:value={mu} step={0.0001} min={0} max={1} />
 		<ParamInput label="ν" bind:value={nu} step={0.0001} min={0} max={1} />

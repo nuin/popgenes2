@@ -25,7 +25,7 @@
 	}
 </script>
 
-<SimLayout title="Heterozygosity Decline" onrun={run} onreset={reset}>
+<SimLayout title="Heterozygosity Decline" onrun={run} onreset={reset} helpKey="/drift/heterozygosity">
 	{#snippet controls()}
 		<ParamInput label="Ne" bind:value={Ne} min={2} />
 		<ParamInput label="p" bind:value={p} step={0.01} min={0.01} max={0.5} />

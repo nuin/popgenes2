@@ -26,7 +26,7 @@
 	}
 </script>
 
-<SimLayout title="Molecular Population Genetics" onrun={run} onreset={reset}>
+<SimLayout title="Molecular Population Genetics" onrun={run} onreset={reset} helpKey="/advanced/molecular">
 	{#snippet controls()}
 		<ParamInput label="n (seqs)" bind:value={n} min={2} max={200} />
 		<ParamInput label="S (sites)" bind:value={S} min={0} max={1000} />

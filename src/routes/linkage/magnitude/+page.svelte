@@ -23,7 +23,7 @@
 	}
 </script>
 
-<SimLayout title="Magnitude of D" onrun={run} onreset={reset}>
+<SimLayout title="Magnitude of D" onrun={run} onreset={reset} helpKey="/linkage/magnitude">
 	{#snippet controls()}
 		<ParamInput label="r" bind:value={r} step={0.01} min={0} max={0.5} />
 		<ParamInput label="D₀" bind:value={D0} step={0.01} min={-0.25} max={0.25} />

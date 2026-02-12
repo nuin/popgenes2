@@ -28,7 +28,7 @@
 	}
 </script>
 
-<SimLayout title="Muller's Ratchet" onrun={run} onreset={reset}>
+<SimLayout title="Muller's Ratchet" onrun={run} onreset={reset} helpKey="/mutation/muller">
 	{#snippet controls()}
 		<ParamInput label="N" bind:value={N} min={10} max={200} />
 		<ParamInput label="Loci" bind:value={loci} min={5} max={50} />

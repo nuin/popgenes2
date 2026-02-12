@@ -32,7 +32,7 @@
 	}
 </script>
 
-<SimLayout title="Drift + Mutation" onrun={run} onreset={reset}>
+<SimLayout title="Drift + Mutation" onrun={run} onreset={reset} helpKey="/drift/with-mutation">
 	{#snippet controls()}
 		<ParamInput label="Pop" bind:value={populations} min={1} />
 		<ParamInput label="Ne" bind:value={populationSize} min={2} />

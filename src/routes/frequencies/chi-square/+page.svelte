@@ -26,7 +26,7 @@
 	const fmt = (n: number) => n.toFixed(4);
 </script>
 
-<SimLayout title="Chi-Square HWE Test" onrun={run} onreset={reset}>
+<SimLayout title="Chi-Square HWE Test" onrun={run} onreset={reset} helpKey="/frequencies/chi-square">
 	{#snippet controls()}
 		<ParamInput label="N(AA)" bind:value={nAA} min={0} />
 		<ParamInput label="N(Aa)" bind:value={nAa} min={0} />

@@ -36,7 +36,7 @@
 	}
 </script>
 
-<SimLayout title="Autosomal Locus" onrun={run} onreset={reset}>
+<SimLayout title="Autosomal Locus" onrun={run} onreset={reset} helpKey="/mating/autosomal">
 	{#snippet controls()}
 		<ParamInput label="N(AA)" bind:value={nAA} min={0} />
 		<ParamInput label="N(Aa)" bind:value={nAa} min={0} />

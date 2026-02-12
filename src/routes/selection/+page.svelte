@@ -27,7 +27,7 @@
 	}
 </script>
 
-<SimLayout title="Natural Selection" onrun={run} onreset={reset}>
+<SimLayout title="Natural Selection" onrun={run} onreset={reset} helpKey="/selection">
 	{#snippet controls()}
 		<ParamInput label="wAA" bind:value={wAA} step={0.01} min={0} max={2} />
 		<ParamInput label="wAa" bind:value={wAa} step={0.01} min={0} max={2} />

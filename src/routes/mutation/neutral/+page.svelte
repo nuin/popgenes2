@@ -23,7 +23,7 @@
 	}
 </script>
 
-<SimLayout title="Neutral Mutations" onrun={run} onreset={reset}>
+<SimLayout title="Neutral Mutations" onrun={run} onreset={reset} helpKey="/mutation/neutral">
 	{#snippet controls()}
 		<ParamInput label="Ne" bind:value={populationSize} min={2} />
 		<ParamInput label="Gen" bind:value={generations} min={1} />

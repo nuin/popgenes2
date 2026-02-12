@@ -25,7 +25,7 @@
 	}
 </script>
 
-<SimLayout title="Continent-Island Migration" onrun={run} onreset={reset}>
+<SimLayout title="Continent-Island Migration" onrun={run} onreset={reset} helpKey="/gene-flow/continent-island">
 	{#snippet controls()}
 		<ParamInput label="p(cont)" bind:value={pContinent} step={0.01} min={0} max={1} />
 		<ParamInput label="p(isle)" bind:value={pIsland} step={0.01} min={0} max={1} />

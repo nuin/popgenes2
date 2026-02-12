@@ -32,7 +32,7 @@
 	}
 </script>
 
-<SimLayout title="Wahlund Effect" onrun={run} onreset={reset}>
+<SimLayout title="Wahlund Effect" onrun={run} onreset={reset} helpKey="/gene-flow/wahlund">
 	{#snippet controls()}
 		<ParamInput label="p₁" bind:value={p1} step={0.01} min={0} max={1} />
 		<ParamInput label="p₂" bind:value={p2} step={0.01} min={0} max={1} />

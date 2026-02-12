@@ -28,7 +28,7 @@
 	}
 </script>
 
-<SimLayout title="Frequency-Dependent Selection" onrun={run} onreset={reset}>
+<SimLayout title="Frequency-Dependent Selection" onrun={run} onreset={reset} helpKey="/selection/frequency-dependent">
 	{#snippet controls()}
 		<ParamInput label="s₁ (AA)" bind:value={s1} step={0.01} min={0} max={1} />
 		<ParamInput label="s₂ (Aa)" bind:value={s2} step={0.01} min={0} max={1} />

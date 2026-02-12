@@ -28,7 +28,7 @@
 	}
 </script>
 
-<SimLayout title="Markov Chain Drift" onrun={run} onreset={reset}>
+<SimLayout title="Markov Chain Drift" onrun={run} onreset={reset} helpKey="/drift/markov">
 	{#snippet controls()}
 		<ParamInput label="Ne" bind:value={Ne} min={2} max={50} />
 		<ParamInput label="State" bind:value={initialFreqIndex} min={0} max={stateCount - 1} />

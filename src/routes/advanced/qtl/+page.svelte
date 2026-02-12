@@ -42,7 +42,7 @@
 	}
 </script>
 
-<SimLayout title="Quantitative Trait Loci" onrun={run} onreset={reset}>
+<SimLayout title="Quantitative Trait Loci" onrun={run} onreset={reset} helpKey="/advanced/qtl">
 	{#snippet controls()}
 		<ParamInput label="N" bind:value={N} min={10} max={500} />
 		<ParamInput label="QTL" bind:value={nQTL} min={2} max={20} />

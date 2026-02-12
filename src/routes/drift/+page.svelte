@@ -25,7 +25,7 @@
 	}
 </script>
 
-<SimLayout title="Genetic Drift" onrun={run} onreset={reset}>
+<SimLayout title="Genetic Drift" onrun={run} onreset={reset} helpKey="/drift">
 	{#snippet controls()}
 		<ParamInput label="Pop" bind:value={populations} min={1} />
 		<ParamInput label="Ne" bind:value={populationSize} min={2} />

@@ -23,7 +23,7 @@
 	}
 </script>
 
-<SimLayout title="Irreversible Mutation" onrun={run} onreset={reset}>
+<SimLayout title="Irreversible Mutation" onrun={run} onreset={reset} helpKey="/mutation/irreversible">
 	{#snippet controls()}
 		<ParamInput label="P(A)" bind:value={initialFreq} step={0.01} min={0} max={1} />
 		<ParamInput label="μ" bind:value={mu} step={0.0001} min={0} max={1} />

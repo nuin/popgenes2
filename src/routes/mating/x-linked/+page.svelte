@@ -23,7 +23,7 @@
 	}
 </script>
 
-<SimLayout title="X-Linked Locus" onrun={run} onreset={reset}>
+<SimLayout title="X-Linked Locus" onrun={run} onreset={reset} helpKey="/mating/x-linked">
 	{#snippet controls()}
 		<ParamInput label="p♀" bind:value={pFemale} step={0.01} min={0} max={1} />
 		<ParamInput label="p♂" bind:value={pMale} step={0.01} min={0} max={1} />

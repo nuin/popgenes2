@@ -55,7 +55,8 @@ Each route page follows a consistent pattern:
 
 ### Component Hierarchy
 
-- **SimLayout** — Master layout using Svelte 5 Snippets (`controls` and `chart` slots). Provides topbar with back link, title, inline controls, Run/Reset/Theme buttons, and a full-bleed chart area.
+- **SimLayout** — Master layout using Svelte 5 Snippets (`controls` and `chart` slots). Provides topbar with back link, title, inline controls, Run/Reset/Theme/Help buttons, and a full-bleed chart area. Accepts optional `helpKey` prop to enable the help panel.
+- **HelpPanel** — Slide-out panel rendering structured help content (formulas as HTML, parameters, insights, references). Triggered by `?` button in SimLayout when `helpKey` is provided.
 - **Chart** — Generic chart wrapper binding a div to `renderLineChart`. Auto-redraws on data/theme/resize.
 - **DriftChart** — Specialized chart component with context-menu toggles (fixation markers, mean line, variance envelope, stats overlay).
 - **DeFinettiChart**, **CurveChart**, **HistogramChart** — Specialized chart wrappers for non-line chart types.
@@ -77,6 +78,27 @@ CSS custom properties defined in `src/app.css` under `[data-theme="dark"]` and `
 - `$props()` for component props with inline type annotations
 - `$bindable()` for two-way binding (used in ParamInput)
 - `{#snippet name()}` / `{@render name()}` for component composition (not legacy slots)
+
+### Help System
+
+`src/lib/help/` provides structured educational content for each simulation module:
+- `types.ts` — `HelpContent` interface (title, category, description, formulas as HTML, parameters, insights, references)
+- `content.ts` — Registry keyed by route path (e.g., `"/drift"`, `"/selection"`)
+- `_drift.ts`, `_selection_mutation.ts`, `_mating_geneflow.ts`, `_linkage_freq_advanced.ts` — Content split by category
+
+To add help for a module: create/add entries in the appropriate `_*.ts` file, keyed by the route path, then pass `helpKey="/route/path"` to `SimLayout`.
+
+### Sim File Naming
+
+Most sim files match their route name, but some don't:
+- `htime.ts` → `/drift/heterozygosity`
+- `fstats.ts` → `/gene-flow/f-statistics`
+- `migration.ts` → `/gene-flow/continent-island` and `/gene-flow/island-island`
+- `mating.ts` → `/mating/autosomal` and `/mating/x-linked`
+
+### Import Aliases
+
+`$lib` resolves to `src/lib/` (configured by SvelteKit). All internal imports use this alias.
 
 ### Module Categories (28 total)
 
@@ -135,4 +157,4 @@ npx wrangler pages deploy build --project-name=popgenejs
 
 ## Git
 
-- Remove claude references from commit messages
+- Never include Claude references or co-authorship in commit messages

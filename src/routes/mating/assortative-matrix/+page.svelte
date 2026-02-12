@@ -101,7 +101,7 @@
 	}
 </script>
 
-<SimLayout title="Assortative Mating Matrix" onrun={run} onreset={reset}>
+<SimLayout title="Assortative Mating Matrix" onrun={run} onreset={reset} helpKey="/mating/assortative-matrix">
 	{#snippet controls()}
 		<ParamInput label="D (AA)" bind:value={D} step={0.01} min={0} max={1} />
 		<ParamInput label="H (Aa)" bind:value={H} step={0.01} min={0} max={1} />
