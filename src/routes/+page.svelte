@@ -20,6 +20,15 @@
 			<span class="featured-desc">Plot genotype frequencies against Hardy-Weinberg equilibrium curves on a ternary diagram</span>
 		</a>
 
+		<a href="/theory" class="theory-link">
+			<span class="theory-icon">&#x1F4D6;</span>
+			<div class="theory-content">
+				<span class="theory-title">Theory &amp; Background</span>
+				<span class="theory-desc">Learn the mathematical foundations behind each simulation</span>
+			</div>
+			<span class="theory-arrow">&rarr;</span>
+		</a>
+
 		<div class="grid">
 			<div class="cat">
 				<div class="cat-header">
@@ -207,6 +216,57 @@
 		font-size: 0.8rem;
 		color: var(--text-muted);
 		line-height: 1.4;
+	}
+
+	.theory-link {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+		margin-bottom: 2rem;
+		background: var(--chart-bg);
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		text-decoration: none;
+		transition: border-color 0.15s, background 0.15s;
+	}
+
+	.theory-link:hover {
+		border-color: var(--accent);
+	}
+
+	.theory-icon {
+		font-size: 1.5rem;
+		opacity: 0.8;
+	}
+
+	.theory-content {
+		flex: 1;
+	}
+
+	.theory-title {
+		display: block;
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--text);
+		margin-bottom: 0.2rem;
+	}
+
+	.theory-desc {
+		display: block;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.theory-arrow {
+		font-size: 1rem;
+		color: var(--text-muted);
+		transition: color 0.15s, transform 0.15s;
+	}
+
+	.theory-link:hover .theory-arrow {
+		color: var(--accent);
+		transform: translateX(3px);
 	}
 
 	.grid {
