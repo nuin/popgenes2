@@ -43,9 +43,10 @@
 			<div class="cat">
 				<div class="cat-header">
 					<span class="cat-title">Genetic Drift</span>
-					<span class="cat-count">6</span>
+					<span class="cat-count">7</span>
 				</div>
 				<a href="/drift">Pure Drift</a>
+				<a href="/drift/bottleneck" class="new">Bottleneck Effect</a>
 				<a href="/drift/with-selection">Drift + Selection</a>
 				<a href="/drift/with-mutation">Drift + Mutation</a>
 				<a href="/drift/combined">Drift + Selection + Mutation</a>
@@ -116,7 +117,7 @@
 		</div>
 
 		<div class="footer">
-			<span class="footer-text">28 modules &middot; SvelteKit + D3.js</span>
+			<span class="footer-text">29 modules &middot; SvelteKit + D3.js</span>
 		</div>
 	</div>
 </div>
@@ -318,6 +319,18 @@
 	.cat a:hover {
 		background: var(--link-hover-bg);
 		color: var(--accent);
+	}
+
+	.cat a.new::after {
+		content: 'NEW';
+		font-size: 0.5rem;
+		font-weight: 600;
+		margin-left: 0.5rem;
+		padding: 0.1rem 0.35rem;
+		border-radius: 3px;
+		background: var(--accent);
+		color: var(--bg);
+		vertical-align: middle;
 	}
 
 	.footer {
