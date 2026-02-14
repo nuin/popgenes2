@@ -40,6 +40,10 @@
 		selectedFreq = [initialP];
 		neutralDiv = [];
 
+		// Clear charts immediately
+		if (freqContainer) d3.select(freqContainer).selectAll('*').remove();
+		if (diversityContainer) d3.select(diversityContainer).selectAll('*').remove();
+
 		// Initialize neutral loci - all start polymorphic at 0.5
 		const neutralFreqs: number[] = new Array(numLoci).fill(0.5);
 		neutralDiv.push(neutralFreqs.map(p => 2 * p * (1 - p))); // Initial heterozygosity
@@ -184,8 +188,9 @@
 		const g = svg.append('g')
 			.attr('transform', `translate(${margin.left},${margin.top})`);
 
-		// Scales
-		const x = d3.scaleLinear().domain([0, Math.max(generation, 50)]).range([0, iw]);
+		// Scales - use data length for domain to ensure consistency
+		const maxX = Math.max(selectedFreq.length - 1, 50);
+		const x = d3.scaleLinear().domain([0, maxX]).range([0, iw]);
 		const y = d3.scaleLinear().domain([0, 1]).range([ih, 0]);
 
 		// Grid
@@ -272,7 +277,7 @@
 			.attr('y', 15)
 			.attr('font-size', '10px')
 			.attr('fill', colors.text)
-			.text(`p = ${lastP.toFixed(3)}, s = ${s}, gen = ${generation}`);
+			.text(`p = ${lastP.toFixed(3)}, s = ${s}, gen = ${selectedFreq.length - 1}`);
 	}
 
 	// === Render Diversity Chart ===
