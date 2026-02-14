@@ -18,6 +18,7 @@
 	let selectedFreq = $state<number[]>([]);        // Frequency of selected allele over time
 	let neutralDiv = $state<number[][]>([]);        // Heterozygosity at each neutral locus over time
 	let fixedGen = $state<number | null>(null);
+	let abortController: AbortController | null = null;
 
 	// === Containers ===
 	let freqContainer: HTMLDivElement;
@@ -25,6 +26,14 @@
 
 	// === Simulation ===
 	async function runSimulation() {
+		// Cancel any running simulation
+		if (abortController) {
+			abortController.abort();
+		}
+		abortController = new AbortController();
+		const signal = abortController.signal;
+
+		// Reset all state
 		running = true;
 		generation = 0;
 		fixedGen = null;
@@ -44,6 +53,12 @@
 		const maxGen = 1000;
 
 		while (p > 0 && p < 1 && generation < maxGen) {
+			// Check if simulation was cancelled
+			if (signal.aborted) {
+				running = false;
+				return;
+			}
+
 			generation++;
 
 			// Selection on beneficial allele
@@ -116,15 +131,27 @@
 				renderFreqChart();
 				renderDiversityChart();
 				await new Promise(r => setTimeout(r, 10));
+
+				// Check again after await in case cancelled during sleep
+				if (signal.aborted) {
+					running = false;
+					return;
+				}
 			}
 		}
 
 		running = false;
+		abortController = null;
 		renderFreqChart();
 		renderDiversityChart();
 	}
 
 	function reset() {
+		// Cancel any running simulation
+		if (abortController) {
+			abortController.abort();
+			abortController = null;
+		}
 		running = false;
 		generation = 0;
 		fixedGen = null;
@@ -457,10 +484,10 @@
 				<ParamInput label="Recomb rate" bind:value={recombRate} min={0.001} max={0.1} step={0.005} />
 			</div>
 			<div class="button-group">
-				<button class="btn btn-run" onclick={runSimulation} disabled={running}>
-					{running ? 'Sweeping...' : 'Start Sweep'}
+				<button class="btn btn-run" onclick={runSimulation}>
+					{running ? 'Restart' : 'Start Sweep'}
 				</button>
-				<button class="btn btn-reset" onclick={reset} disabled={running}>
+				<button class="btn btn-reset" onclick={reset}>
 					Reset
 				</button>
 			</div>
