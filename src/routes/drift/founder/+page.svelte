@@ -24,6 +24,11 @@
 	function runSimulation() {
 		running = true;
 		results = [];
+		sourceStats = null;
+
+		// Clear charts immediately
+		if (chartContainer) d3.select(chartContainer).selectAll('*').remove();
+		if (comparisonContainer) d3.select(comparisonContainer).selectAll('*').remove();
 
 		// Generate source population genotypes based on HWE
 		const p = initialP;
@@ -139,8 +144,9 @@
 		const g = svg.append('g')
 			.attr('transform', `translate(${margin.left},${margin.top})`);
 
-		// Scales
-		const x = d3.scaleLinear().domain([0, generations]).range([0, iw]);
+		// Scales - use data length for domain to ensure consistency
+		const maxGen = results.length > 0 ? results.length - 1 : generations;
+		const x = d3.scaleLinear().domain([0, maxGen]).range([0, iw]);
 		const y = d3.scaleLinear().domain([0, 1]).range([ih, 0]);
 
 		// Grid
@@ -414,10 +420,10 @@
 				<ParamInput label="Generations" bind:value={generations} min={10} max={200} step={10} />
 			</div>
 			<div class="button-group">
-				<button class="btn btn-run" onclick={runSimulation} disabled={running}>
-					{running ? 'Running...' : 'Colonize'}
+				<button class="btn btn-run" onclick={runSimulation}>
+					{running ? 'Restart' : 'Colonize'}
 				</button>
-				<button class="btn btn-reset" onclick={reset} disabled={running}>
+				<button class="btn btn-reset" onclick={reset}>
 					Reset
 				</button>
 			</div>
