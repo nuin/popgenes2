@@ -43,10 +43,11 @@
 			<div class="cat">
 				<div class="cat-header">
 					<span class="cat-title">Genetic Drift</span>
-					<span class="cat-count">7</span>
+					<span class="cat-count">8</span>
 				</div>
 				<a href="/drift">Pure Drift</a>
-				<a href="/drift/bottleneck" class="new">Bottleneck Effect</a>
+				<a href="/drift/bottleneck">Bottleneck Effect</a>
+				<a href="/drift/founder" class="new">Founder Effect</a>
 				<a href="/drift/with-selection">Drift + Selection</a>
 				<a href="/drift/with-mutation">Drift + Mutation</a>
 				<a href="/drift/combined">Drift + Selection + Mutation</a>
@@ -79,9 +80,10 @@
 			<div class="cat">
 				<div class="cat-header">
 					<span class="cat-title">Natural Selection</span>
-					<span class="cat-count">2</span>
+					<span class="cat-count">3</span>
 				</div>
 				<a href="/selection">Natural Selection</a>
+				<a href="/selection/sweep" class="new">Selective Sweep</a>
 				<a href="/selection/frequency-dependent">Frequency-Dependent</a>
 			</div>
 
@@ -117,7 +119,7 @@
 		</div>
 
 		<div class="footer">
-			<span class="footer-text">29 modules &middot; SvelteKit + D3.js</span>
+			<span class="footer-text">31 modules &middot; SvelteKit + D3.js</span>
 		</div>
 	</div>
 </div>
