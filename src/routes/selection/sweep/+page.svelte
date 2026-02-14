@@ -25,40 +25,40 @@
 	let diversityContainer: HTMLDivElement;
 
 	// === Simulation ===
+	// Use a run ID to track which simulation is current
+	let currentRunId = 0;
+
 	async function runSimulation() {
-		// Cancel any running simulation
-		if (abortController) {
-			abortController.abort();
-		}
-		abortController = new AbortController();
-		const signal = abortController.signal;
+		// Increment run ID to invalidate any previous simulation
+		const runId = ++currentRunId;
 
-		// Reset all state
-		running = true;
-		generation = 0;
-		fixedGen = null;
-		selectedFreq = [initialP];
-		neutralDiv = [];
-
-		// Clear charts immediately
+		// Clear everything first
 		if (freqContainer) d3.select(freqContainer).selectAll('*').remove();
 		if (diversityContainer) d3.select(diversityContainer).selectAll('*').remove();
 
+		// Reset all state with fresh arrays
+		running = true;
+		generation = 0;
+		fixedGen = null;
+
+		// Use LOCAL arrays during simulation to avoid reactive issues
+		const localSelectedFreq: number[] = [initialP];
+		const localNeutralDiv: number[][] = [];
+
 		// Initialize neutral loci - all start polymorphic at 0.5
 		const neutralFreqs: number[] = new Array(numLoci).fill(0.5);
-		neutralDiv.push(neutralFreqs.map(p => 2 * p * (1 - p))); // Initial heterozygosity
+		localNeutralDiv.push(neutralFreqs.map(p => 2 * p * (1 - p))); // Initial heterozygosity
 
-		// Haplotype structure: track which neutral alleles are linked to beneficial
-		// Simplified model: initially beneficial allele is linked to all "1" alleles at neutral loci
-		// with probability based on initial neutral freq
-		let linkedNeutral: number[] = neutralFreqs.map(() => Math.random() < 0.5 ? 1 : 0);
+		// Haplotype structure
+		const linkedNeutral: number[] = neutralFreqs.map(() => Math.random() < 0.5 ? 1 : 0);
 
 		let p = initialP;
 		const maxGen = 1000;
+		let localFixedGen: number | null = null;
 
 		while (p > 0 && p < 1 && generation < maxGen) {
-			// Check if simulation was cancelled
-			if (signal.aborted) {
+			// Check if this simulation was superseded by a new one
+			if (runId !== currentRunId) {
 				running = false;
 				return;
 			}
@@ -82,28 +82,20 @@
 			}
 			p = count / (2 * N);
 
-			selectedFreq.push(p);
+			localSelectedFreq.push(p);
 
 			// Update neutral loci - hitchhiking effect
-			// As beneficial allele increases, linked neutral alleles increase too
-			// Recombination breaks linkage
 			const newNeutralFreqs: number[] = [];
 
 			for (let locus = 0; locus < numLoci; locus++) {
-				// Distance from selected site (center)
 				const distFromCenter = Math.abs(locus - numLoci / 2);
 				const recombProb = 1 - Math.pow(1 - recombRate, distFromCenter);
 
-				// Neutral allele frequency depends on:
-				// 1. Linkage to beneficial allele (hitchhiking)
-				// 2. Recombination breaking linkage
-				// 3. Drift
-
 				let neutralP = neutralFreqs[locus];
 
-				// Hitchhiking: if linked to beneficial, frequency increases with it
-				// Effect is stronger for closer loci (less recombination)
-				const hitchhikeStrength = (1 - recombProb) * (p - selectedFreq[selectedFreq.length - 2]);
+				// Hitchhiking effect
+				const prevP = localSelectedFreq[localSelectedFreq.length - 2];
+				const hitchhikeStrength = (1 - recombProb) * (p - prevP);
 				if (linkedNeutral[locus] === 1) {
 					neutralP += hitchhikeStrength * (1 - neutralP);
 				} else {
@@ -122,30 +114,34 @@
 				neutralFreqs[locus] = neutralP;
 			}
 
-			// Calculate heterozygosity
-			neutralDiv.push(newNeutralFreqs.map(freq => 2 * freq * (1 - freq)));
+			localNeutralDiv.push(newNeutralFreqs.map(freq => 2 * freq * (1 - freq)));
 
 			// Check for fixation
-			if (p >= 0.999 && fixedGen === null) {
-				fixedGen = generation;
+			if (p >= 0.999 && localFixedGen === null) {
+				localFixedGen = generation;
 			}
 
-			// Render periodically
+			// Render periodically - copy local arrays to state
 			if (generation % 5 === 0 || p >= 1 || p <= 0) {
+				selectedFreq = [...localSelectedFreq];
+				neutralDiv = [...localNeutralDiv];
+				fixedGen = localFixedGen;
 				renderFreqChart();
 				renderDiversityChart();
 				await new Promise(r => setTimeout(r, 10));
 
-				// Check again after await in case cancelled during sleep
-				if (signal.aborted) {
+				if (runId !== currentRunId) {
 					running = false;
 					return;
 				}
 			}
 		}
 
+		// Final update
+		selectedFreq = [...localSelectedFreq];
+		neutralDiv = [...localNeutralDiv];
+		fixedGen = localFixedGen;
 		running = false;
-		abortController = null;
 		renderFreqChart();
 		renderDiversityChart();
 	}

@@ -21,14 +21,21 @@
 	let comparisonContainer: HTMLDivElement;
 
 	// === Simulation ===
+	// Track current run to invalidate previous simulations
+	let currentRunId = 0;
+
 	function runSimulation() {
+		// Increment run ID to invalidate any stale state
+		const runId = ++currentRunId;
+
+		// Clear everything FIRST before any computation
+		if (chartContainer) d3.select(chartContainer).selectAll('*').remove();
+		if (comparisonContainer) d3.select(comparisonContainer).selectAll('*').remove();
+
+		// Reset reactive state
 		running = true;
 		results = [];
 		sourceStats = null;
-
-		// Clear charts immediately
-		if (chartContainer) d3.select(chartContainer).selectAll('*').remove();
-		if (comparisonContainer) d3.select(comparisonContainer).selectAll('*').remove();
 
 		// Generate source population genotypes based on HWE
 		const p = initialP;
@@ -56,9 +63,8 @@
 		}
 
 		const actualSourceP = (2 * sourceAA + sourceAa) / (2 * sourceN);
-		sourceStats = { p: actualSourceP, AA: sourceAA, Aa: sourceAa, aa: sourceaa };
 
-		// Run multiple founding events
+		// Run multiple founding events - use LOCAL arrays
 		const allTrials: number[][] = [];
 
 		for (let trial = 0; trial < numTrials; trial++) {
@@ -101,15 +107,26 @@
 			allTrials.push(trajectory);
 		}
 
-		// Build results for animation
+		// Check if this run was superseded
+		if (runId !== currentRunId) {
+			running = false;
+			return;
+		}
+
+		// Build results using LOCAL array first
+		const localResults: { gen: number; trials: number[][] }[] = [];
 		for (let gen = 0; gen <= generations; gen++) {
-			results.push({
+			localResults.push({
 				gen,
 				trials: allTrials.map(t => [t[gen]])
 			});
 		}
 
+		// NOW assign to reactive state all at once
+		sourceStats = { p: actualSourceP, AA: sourceAA, Aa: sourceAa, aa: sourceaa };
+		results = localResults;
 		running = false;
+
 		renderChart();
 		renderComparison();
 	}
