@@ -300,21 +300,31 @@
 		const generationDelay = 150;
 		const targetN = recoveryN;
 
-		while (population.length < targetN) {
-			// Calculate current allele freq
-			const alive = population.filter(p => p.alive);
-			const n = alive.length;
-			const AA = alive.filter(p => p.genotype === 2).length;
-			const Aa = alive.filter(p => p.genotype === 1).length;
-			const p = (2 * AA + Aa) / (2 * n);
+		// IMPORTANT: Capture survivor allele frequency ONCE at start of recovery
+		// This is the founder frequency that should be maintained (with drift)
+		const survivors = population.filter(ind => ind.alive);
+		const survivorN = survivors.length;
+		const survivorAA = survivors.filter(ind => ind.genotype === 2).length;
+		const survivorAa = survivors.filter(ind => ind.genotype === 1).length;
+		const founderP = (2 * survivorAA + survivorAa) / (2 * survivorN);
 
-			// Add new individuals (reproduction with drift)
+		console.log(`Recovery starting with founder p = ${founderP.toFixed(3)} from ${survivorN} survivors`);
+
+		while (population.length < targetN) {
+			// Get current population for parent selection
+			const alive = population.filter(ind => ind.alive);
+			const n = alive.length;
+
+			// Add new individuals (reproduction based on FOUNDER frequency, not current)
+			// This simulates rapid expansion where founder effect dominates
 			const toAdd = Math.min(Math.ceil(n * 0.3), targetN - population.length);
 
 			for (let i = 0; i < toAdd; i++) {
-				// Sample alleles from population with drift
-				const allele1 = Math.random() < p ? 1 : 0;
-				const allele2 = Math.random() < p ? 1 : 0;
+				// Sample alleles from founder frequency (bottleneck survivors)
+				// Small drift variance per generation
+				const driftP = founderP + (Math.random() - 0.5) * 0.02; // tiny drift
+				const allele1 = Math.random() < driftP ? 1 : 0;
+				const allele2 = Math.random() < driftP ? 1 : 0;
 				const genotype = allele1 + allele2;
 
 				// Spawn near a random parent
@@ -354,6 +364,9 @@
 		const stats = currentStats();
 		afterState = { ...stats };
 		phase = 'complete';
+
+		console.log(`Recovery complete: final p = ${stats.p.toFixed(3)} (founder was ${founderP.toFixed(3)}, original was ${initialP.toFixed(3)})`);
+
 		renderFunnel();
 	}
 
