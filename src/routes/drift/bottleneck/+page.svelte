@@ -404,7 +404,7 @@
 			.attr('width', w)
 			.attr('height', h);
 
-		const margin = { top: 30, bottom: 40, left: 40, right: 40 };
+		const margin = { top: 30, bottom: 70, left: 40, right: 40 };
 		const iw = w - margin.left - margin.right;
 		const ih = h - margin.top - margin.bottom;
 
@@ -539,24 +539,43 @@
 				.attr('font-size', '11px')
 				.text(label);
 
-			// N count
+			// N count above bar
 			g.append('text')
 				.attr('x', x)
 				.attr('y', ih - barHeight - 8)
 				.attr('text-anchor', 'middle')
 				.attr('fill', colors.text)
-				.attr('font-size', '10px')
+				.attr('font-size', '11px')
 				.attr('font-weight', '600')
 				.text(`N=${state.n}`);
 
-			// p value
+			// Stats below label
 			g.append('text')
 				.attr('x', x)
 				.attr('y', ih + 32)
 				.attr('text-anchor', 'middle')
+				.attr('fill', colors.text)
+				.attr('font-size', '10px')
+				.attr('font-weight', '500')
+				.text(`p = ${state.p.toFixed(3)}`);
+
+			// Genotype counts
+			g.append('text')
+				.attr('x', x)
+				.attr('y', ih + 46)
+				.attr('text-anchor', 'middle')
 				.attr('fill', colors.muted)
 				.attr('font-size', '9px')
-				.text(`p=${state.p.toFixed(3)}`);
+				.text(`AA:${state.AA} Aa:${state.Aa} aa:${state.aa}`);
+
+			// Heterozygosity
+			g.append('text')
+				.attr('x', x)
+				.attr('y', ih + 58)
+				.attr('text-anchor', 'middle')
+				.attr('fill', colors.muted)
+				.attr('font-size', '9px')
+				.text(`H = ${state.H.toFixed(3)}`);
 		});
 
 		// Legend
@@ -899,7 +918,7 @@
 	}
 
 	.funnel {
-		height: 180px;
+		height: 220px;
 	}
 
 	@media (max-width: 768px) {
@@ -917,7 +936,7 @@
 		}
 
 		.funnel {
-			height: 150px;
+			height: 200px;
 		}
 
 		.action-buttons {
