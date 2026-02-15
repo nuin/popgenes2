@@ -113,17 +113,17 @@ export function renderDeFinettiChart(
 		.attr('stroke-dashoffset', 0);
 
 	// --- Vertex labels ---
-	const labels: { pos: { x: number; y: number }; text: string; dx: number; dy: number }[] = [
-		{ pos: TRIANGLE.aa, text: 'aa', dx: -12, dy: 16 },
-		{ pos: TRIANGLE.AA, text: 'AA', dx: 12, dy: 16 },
-		{ pos: TRIANGLE.Aa, text: 'Aa', dx: 0, dy: -10 }
+	const labels: { pos: { x: number; y: number }; text: string; dx: number; dy: number; anchor: string }[] = [
+		{ pos: TRIANGLE.aa, text: 'aa', dx: -18, dy: -6, anchor: 'end' },
+		{ pos: TRIANGLE.AA, text: 'AA', dx: 18, dy: -6, anchor: 'start' },
+		{ pos: TRIANGLE.Aa, text: 'Aa', dx: 0, dy: -14, anchor: 'middle' }
 	];
 
 	labels.forEach(l => {
 		g.append('text')
 			.attr('x', x(l.pos.x) + l.dx)
 			.attr('y', y(l.pos.y) + l.dy)
-			.attr('text-anchor', 'middle')
+			.attr('text-anchor', l.anchor)
 			.attr('font-family', 'Inter, sans-serif')
 			.attr('font-size', '12px')
 			.attr('font-weight', '600')

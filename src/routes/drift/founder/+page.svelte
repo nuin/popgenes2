@@ -123,12 +123,10 @@
 		}
 
 		// NOW assign to reactive state all at once
+		// The $effect will handle rendering when results changes
 		sourceStats = { p: actualSourceP, AA: sourceAA, Aa: sourceAa, aa: sourceaa };
 		results = localResults;
 		running = false;
-
-		renderChart();
-		renderComparison();
 	}
 
 	function reset() {
@@ -139,13 +137,22 @@
 	}
 
 	// === Render Chart ===
+	let isRendering = false;
+
 	function renderChart() {
 		if (!browser || !chartContainer || results.length === 0) return;
+		if (isRendering) return; // Prevent re-entry
+		isRendering = true;
 
 		const colors = getColors();
 		const rect = chartContainer.getBoundingClientRect();
 		const w = rect.width;
 		const h = rect.height;
+
+		if (w < 10 || h < 10) {
+			isRendering = false;
+			return;
+		}
 
 		d3.select(chartContainer).selectAll('*').remove();
 
@@ -265,6 +272,8 @@
 			.attr('font-size', '10px')
 			.attr('fill', colors.text)
 			.text(`${numTrials} independent founding events`);
+
+		isRendering = false;
 	}
 
 	// === Render Comparison ===
@@ -393,16 +402,31 @@
 		}
 	});
 
+	let lastChartSize = { w: 0, h: 0 };
 	$effect(() => {
-		const observer = new ResizeObserver(() => {
-			if (results.length > 0) {
-				renderChart();
-				renderComparison();
-			}
+		let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+		const observer = new ResizeObserver((entries) => {
+			if (results.length === 0) return;
+			// Debounce and check if size actually changed
+			if (resizeTimeout) clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(() => {
+				const entry = entries[0];
+				if (entry) {
+					const { width, height } = entry.contentRect;
+					if (Math.abs(width - lastChartSize.w) > 5 || Math.abs(height - lastChartSize.h) > 5) {
+						lastChartSize = { w: width, h: height };
+						renderChart();
+						renderComparison();
+					}
+				}
+			}, 100);
 		});
 		if (chartContainer) observer.observe(chartContainer);
 		if (comparisonContainer) observer.observe(comparisonContainer);
-		return () => observer.disconnect();
+		return () => {
+			if (resizeTimeout) clearTimeout(resizeTimeout);
+			observer.disconnect();
+		};
 	});
 </script>
 
@@ -646,11 +670,15 @@
 	.chart {
 		flex: 1;
 		min-height: 200px;
+		overflow: hidden;
+		position: relative;
 	}
 
 	.comparison {
 		flex: 1;
 		min-height: 120px;
+		overflow: hidden;
+		position: relative;
 	}
 
 	.source-info {

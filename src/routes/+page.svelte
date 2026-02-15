@@ -83,17 +83,18 @@
 					<span class="cat-count">3</span>
 				</div>
 				<a href="/selection">Natural Selection</a>
-				<a href="/selection/sweep" class="new">Selective Sweep</a>
+				<a href="/selection/dominance">Dominance & Selection</a>
 				<a href="/selection/frequency-dependent">Frequency-Dependent</a>
 			</div>
 
 			<div class="cat">
 				<div class="cat-header">
 					<span class="cat-title">Gene Flow &amp; Structure</span>
-					<span class="cat-count">4</span>
+					<span class="cat-count">5</span>
 				</div>
 				<a href="/gene-flow/continent-island">Continent-Island Model</a>
 				<a href="/gene-flow/island-island">Island-Island Model</a>
+				<a href="/gene-flow/stepping-stone">Stepping-Stone Model</a>
 				<a href="/gene-flow/f-statistics">F-Statistics</a>
 				<a href="/gene-flow/wahlund">Wahlund Effect</a>
 			</div>
