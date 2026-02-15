@@ -46,7 +46,7 @@
 				>?</button>
 			{/if}
 			<button class="btn-theme" onclick={toggleTheme} aria-label="Toggle theme">
-				{$theme === 'dark' ? '&#9788;' : '&#9790;'}
+				{$theme === 'dark' ? '☀' : '☾'}
 			</button>
 		</div>
 	</div>

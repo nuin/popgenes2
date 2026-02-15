@@ -69,7 +69,7 @@
 	{#snippet chart()}
 		<Chart
 			{data}
-			legendLabels={compareMode ? ['h=0', 'h=0.25', 'h=0.5', 'h=0.75', 'h=1'] : undefined}
+			options={compareMode ? { lineLabels: ['h=0', 'h=0.25', 'h=0.5', 'h=0.75', 'h=1'] } : {}}
 		/>
 	{/snippet}
 </SimLayout>

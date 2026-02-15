@@ -61,21 +61,21 @@
 					</div>
 				</div>
 				<div class="grid-cell">
-					<div class="cell-label">Mean Values (red=phenotypic, blue=genotypic)</div>
+					<div class="cell-label">Mean Values</div>
 					<div class="cell-chart">
-						<Chart data={means} options={{ yLabel: 'Mean Value' }} />
+						<Chart data={means} options={{ yLabel: 'Mean', lineLabels: ['Phenotypic', 'Genotypic'] }} />
 					</div>
 				</div>
 				<div class="grid-cell">
-					<div class="cell-label">Variance (red=VP, blue=VG)</div>
+					<div class="cell-label">Variance Components</div>
 					<div class="cell-chart">
-						<Chart data={variances} options={{ yLabel: 'Variance' }} />
+						<Chart data={variances} options={{ yLabel: 'Variance', lineLabels: ['VP', 'VG'] }} />
 					</div>
 				</div>
 				<div class="grid-cell">
-					<div class="cell-label">Heritability (VG/VP)</div>
+					<div class="cell-label">Heritability</div>
 					<div class="cell-chart">
-						<Chart data={heritability} options={{ yLabel: 'h²' }} />
+						<Chart data={heritability} options={{ yLabel: 'h²', lineLabels: ['h² = VG/VP'] }} />
 					</div>
 				</div>
 			</div>

@@ -107,7 +107,7 @@
 		{/if}
 	{/snippet}
 	{#snippet chart()}
-		<Chart {data} {legendLabels} />
+		<Chart {data} options={{ lineLabels: legendLabels }} />
 	{/snippet}
 </SimLayout>
 

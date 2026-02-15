@@ -18,7 +18,17 @@ export function renderLineChart(
 	data: SimResult,
 	options: ChartOptions = {}
 ) {
-	const { xLabel = 'Generations', yLabel = 'Allele Frequency', yDomain = [0, 1], lineLabels } = options;
+	const { xLabel = 'Generations', yLabel = 'Allele Frequency', yDomain, lineLabels } = options;
+
+	// Auto-compute yDomain if not provided
+	let computedYDomain: [number, number] = yDomain ?? [0, 1];
+	if (!yDomain && data.length > 0) {
+		const allValues = data.flat().map(d => d.frequency);
+		const minVal = Math.min(...allValues);
+		const maxVal = Math.max(...allValues);
+		const padding = (maxVal - minVal) * 0.1 || 0.1;
+		computedYDomain = [Math.max(0, minVal - padding), maxVal + padding];
+	}
 
 	d3.select(container).selectAll('*').remove();
 
@@ -54,7 +64,7 @@ export function renderLineChart(
 		.attr('transform', `translate(${margin.left},${margin.top})`);
 
 	const x = d3.scaleLinear().domain([0, maxGen]).range([0, iw]);
-	const y = d3.scaleLinear().domain(yDomain).range([ih, 0]);
+	const y = d3.scaleLinear().domain(computedYDomain).range([ih, 0]);
 
 	// Grid lines
 	const yTicks = y.ticks(5);

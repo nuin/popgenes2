@@ -10,6 +10,9 @@ export interface HistogramOptions {
 	xLabel?: string;
 	yLabel?: string;
 	yDomain?: [number, number];
+	overlayValues?: number[]; // Optional overlay line (e.g., expected values)
+	overlayLabel?: string;
+	overlayColor?: string;
 }
 
 export function renderHistogramChart(
@@ -17,7 +20,7 @@ export function renderHistogramChart(
 	bars: HistogramBar[],
 	options: HistogramOptions = {}
 ) {
-	const { xLabel = '', yLabel = 'Frequency', yDomain } = options;
+	const { xLabel = '', yLabel = 'Frequency', yDomain, overlayValues, overlayColor } = options;
 
 	d3.select(container).selectAll('*').remove();
 
@@ -99,6 +102,39 @@ export function renderHistogramChart(
 		.ease(d3.easeQuadOut)
 		.attr('y', d => y(d.value))
 		.attr('height', d => ih - y(d.value));
+
+	// Overlay line for expected values
+	if (overlayValues && overlayValues.length > 0) {
+		const overlayData = bars.map((b, i) => ({
+			label: b.label,
+			value: overlayValues[i] ?? 0
+		}));
+
+		const lineColor = overlayColor ?? style.getPropertyValue('--viz-2').trim();
+
+		// Draw line connecting centers of bars
+		const line = d3.line<{ label: string; value: number }>()
+			.x(d => (x(d.label) ?? 0) + x.bandwidth() / 2)
+			.y(d => y(d.value))
+			.curve(d3.curveMonotoneX);
+
+		g.append('path')
+			.datum(overlayData)
+			.attr('fill', 'none')
+			.attr('stroke', lineColor)
+			.attr('stroke-width', 2)
+			.attr('stroke-dasharray', '4,2')
+			.attr('d', line);
+
+		// Draw points
+		g.selectAll('.overlay-point')
+			.data(overlayData)
+			.enter().append('circle')
+			.attr('cx', d => (x(d.label) ?? 0) + x.bandwidth() / 2)
+			.attr('cy', d => y(d.value))
+			.attr('r', 3)
+			.attr('fill', lineColor);
+	}
 
 	// Labels
 	if (xLabel) {

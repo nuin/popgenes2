@@ -4,13 +4,15 @@
 		value = $bindable(),
 		step = 1,
 		min,
-		max
+		max,
+		disabled = false
 	}: {
 		label: string;
 		value: number;
 		step?: number;
 		min?: number;
 		max?: number;
+		disabled?: boolean;
 	} = $props();
 </script>
 
@@ -19,10 +21,12 @@
 	<input
 		type="number"
 		class="control-input"
+		class:disabled
 		bind:value
 		{step}
 		{min}
 		{max}
+		{disabled}
 	/>
 </div>
 
@@ -59,5 +63,10 @@
 
 	.control-input:focus {
 		border-color: var(--border-focus);
+	}
+
+	.control-input.disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 </style>
